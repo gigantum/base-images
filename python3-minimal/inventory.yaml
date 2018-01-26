@@ -1,0 +1,9 @@
+id: "python3-minimal"
+name: "Python3 Minimal"
+description: "A minimal Base containing Python 3.6 and JupyterLab with no additional packages"
+development_env:
+  - jupyerlab
+packages:
+  - apt:
+  - pip:
+  - conda:

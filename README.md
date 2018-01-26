@@ -1,10 +1,15 @@
 # LabBook Base Image Repository
 
-A repo to maintain Gigantum authored Base Images for LabBook environments
+A repository to maintain Gigantum authored Base Docker Images for LabBook environments
 
 
 ## Images
 
-### ubuntu1604-python3
+### python3-minimal
 
-An image for Ubuntu 16.04 python 3 developers. Installs the latests updates, build-essential, python3, git, curl, and vim as a base.
+A minimal Base containing Python 3.6 and JupyterLab with no additional packages
+
+### python3-data-science
+
+A Base containing Python 3.6, JupyterLab, and common data science packages pre-installed
+
