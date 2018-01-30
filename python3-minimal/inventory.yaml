@@ -6,4 +6,4 @@ development_env:
 packages:
   - apt:
   - pip:
-  - conda:
+  - conda3:

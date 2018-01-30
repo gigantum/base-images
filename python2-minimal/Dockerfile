@@ -1,0 +1,58 @@
+# Copyright (c) Gigantum
+
+# Note, some docker commands taken from/inspired by the standard docker-stacks maintained
+# by the Jupyter team: https://github.com/jupyter/docker-stacks/
+# Copyright (c) Jupyter Development Team.
+# Distributed under the terms of the Modified BSD License.
+
+FROM ubuntu:16.04
+LABEL maintainer="Gigantum <hello@gigantum.io>"
+
+# Install system level dependencies
+RUN apt-get update && apt-get -yq dist-upgrade && \
+    apt-get install -yq --no-install-recommends \
+    wget \
+    bzip2 \
+    ca-certificates \
+    sudo \
+    locales \
+    fonts-liberation \
+    git && \
+    apt-get clean 
+
+RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && locale-gen
+
+# Setup environment variables
+ENV CONDA_DIR=/opt/conda \
+    GIGANTUM_SHARE=/mnt/share \
+    GIGANTUM_WORKDIR=/mnt/labbook \
+    SHELL=/bin/bash \
+    MINICONDA_VERSION=4.3.31 \
+    LC_ALL=en_US.UTF-8 \
+    LANG=en_US.UTF-8
+ENV PATH=$CONDA_DIR/bin:$PATH \
+    JUPYTER_RUNTIME_DIR=$GIGANTUM_SHARE/jupyter/runtime
+
+# Install conda and python
+RUN cd /tmp && wget --quiet https://repo.continuum.io/miniconda/Miniconda2-${MINICONDA_VERSION}-Linux-x86_64.sh && \
+    echo "da2dd466d26e33a2b1f72fdb853a8ff0 *Miniconda2-${MINICONDA_VERSION}-Linux-x86_64.sh" | md5sum -c - && \
+    /bin/bash Miniconda2-${MINICONDA_VERSION}-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
+    rm Miniconda2-${MINICONDA_VERSION}-Linux-x86_64.sh && \
+    conda config --system --prepend channels conda-forge && \
+    conda config --system --set auto_update_conda false && \
+    conda config --system --set show_channel_urls true && \
+    conda update --all --quiet --yes 
+
+# Install and configure JupyterLab
+RUN conda install --quiet --yes -c conda-forge \
+    'jupyterlab=0.31.*' \
+    'notebook=5.3.*' && \
+    conda clean -tipsy && \
+    rm -rf $CONDA_DIR/share/jupyter/lab/staging
+EXPOSE 8888
+
+# Set working dir
+WORKDIR $GIGANTUM_WORKDIR
+
+# CMD may be updated during final image assembly, but this keeps a container alive.
+CMD ["tail -f /dev/null"]

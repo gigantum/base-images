@@ -7,7 +7,7 @@ packages:
   - apt:
    - libav-tools
   - pip:
-  - conda:
+  - conda3:
     - nomkl
     - pandas=0.22*
     - numexpr=2.6*
