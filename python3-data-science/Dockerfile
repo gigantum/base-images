@@ -37,6 +37,7 @@ RUN conda install --quiet --yes nodejs && \
     'beautifulsoup4=4.5.*' \
     'protobuf=3.*' \
     'xlrd=1.1*'  && \
+    'xarray=0.10*'  && \
     jupyter labextension install @jupyterlab/plotly-extension jupyterlab_bokeh && \
     jupyter labextension install jupyterlab_bokeh && \
     conda remove --quiet --yes --force qt pyqt && \
