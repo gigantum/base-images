@@ -17,6 +17,7 @@ RUN apt-get update && apt-get -yq dist-upgrade && \
     sudo \
     locales \
     fonts-liberation \
+    gosu \
     git && \
     apt-get clean 
 
