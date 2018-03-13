@@ -1,0 +1,21 @@
+id: "python3-labbook-demo"
+name: "Python3 Demo LabBook Base"
+description: "A Base containing Python 3.6, JupyterLab, and packages required for the Awful Intersections LabBook demo"
+development_env:
+  - jupyerlab
+packages:
+  - apt:
+   - libfontconfig1
+   - libxext6
+   - libxrender1
+  - pip:
+    - Jinja2==2.10
+    - imgkit==1.0.1 
+    - overpy==0.4
+  - conda3:
+    - numpy=1.14.1 
+    - osmnx=0.7.2 
+    - pillow=5.0.0 
+    - scikit-learn=0.19.1 
+    - scipy=1.0.0 
+    - wkhtmltopdf=0.12.4
