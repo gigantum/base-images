@@ -60,10 +60,8 @@ EXPOSE 8888
 WORKDIR $GIGANTUM_WORKDIR
 
 # Install Python packages
-# Remove pyqt and qt pulled in for matplotlib since we're only ever going to
-# use notebook-friendly backends in these images
-RUN conda install --quiet --yes nodejs && \
-    conda install --quiet --yes \
+RUN conda install --quiet --yes nodejs \
+    && conda install --quiet --yes \
     nomkl \
     'mro-base=3.4.*' \
     # We might want to break this up ourselves...
@@ -99,10 +97,15 @@ RUN conda install --quiet --yes nodejs && \
     # People also like this, kind of like a lower-level dplyr
     r-dt \
     r-irkernel \
-    conda remove --quiet --yes --force qt pyqt && \
-    conda clean -tipsy && \
-    npm cache --force clean && \
-    rm -rf $CONDA_DIR/share/jupyter/lab/staging
+    && conda clean -tipsy \
+    && npm cache --force clean \
+    && rm -rf $CONDA_DIR/share/jupyter/lab/staging
+
+
+# The following was originally used to remove pyqt and qt pulled in for
+# matplotlib (since we're only ever going to use notebook-friendly backends in
+# these images). They don't seem to be installed anymore by default!
+# RUN conda remove --quiet --yes --force qt pyqt \
 
 # CMD may be updated during final image assembly, but this keeps a container alive.
 CMD ["tail -f /dev/null"]
