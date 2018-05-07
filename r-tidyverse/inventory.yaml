@@ -1,0 +1,12 @@
+id: "python3-data-science"
+name: "Python3 Data Science Quickstart"
+description: "A Base containing Python 3.6, JupyterLab, and common data science packages pre-installed"
+development_env:
+  - jupyerlab
+packages:
+  - apt:
+  - pip:
+  - conda3:
+    - nomkl
+    - r-tidyverse
+    - r-irkernel
