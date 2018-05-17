@@ -9,7 +9,7 @@ FROM ubuntu:16.04
 LABEL maintainer="Gigantum <hello@gigantum.io>"
 
 # Install system level dependencies
-RUN apt-get update && apt-get -yq dist-upgrade && \
+RUN apt-get update && \
     apt-get install -yq --no-install-recommends \
     wget \
     bzip2 \
@@ -46,9 +46,11 @@ RUN cd /tmp && wget --quiet https://repo.continuum.io/miniconda/Miniconda3-${MIN
 
 # Install and configure JupyterLab
 RUN conda install --quiet --yes -c conda-forge \
-    'jupyterlab=0.31.*' \
-    'notebook=5.3.*' && \
+    'jupyterlab=0.32.*' \
+    'notebook=5.4.*' && \
     conda clean -tipsy && \
+    npm cache clean --force && \
+    rm -rf /home/$NB_USER/.cache/yarn && \
     rm -rf $CONDA_DIR/share/jupyter/lab/staging
 EXPOSE 8888
 
