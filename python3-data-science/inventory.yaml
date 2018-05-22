@@ -8,7 +8,8 @@ packages:
    - libav-tools
   - pip:
   - conda3:
-    - nomkl
+    - ipywidgets=7.2*
+    - numpy=1.13.*
     - pandas=0.22*
     - numexpr=2.6*
     - matplotlib=2.1*

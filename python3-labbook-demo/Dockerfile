@@ -10,3 +10,8 @@ RUN apt-get -y update && apt-get -y install libfontconfig1 libxext6 libxrender1 
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     conda clean -tipsy
+	
+
+	#npm cache clean --force && \
+    #rm -rf /home/$NB_USER/.cache/yarn && \
+    #rm -rf $CONDA_DIR/share/jupyter/lab/staging && \

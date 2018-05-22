@@ -44,9 +44,6 @@ RUN cd /tmp && wget --quiet https://repo.continuum.io/miniconda/Miniconda3-${MIN
     conda config --system --set show_channel_urls true && \
     conda update --all --quiet --yes && \
     conda install --quiet --yes -c conda-forge 'jupyterlab=0.32.*' 'notebook=5.5.*' && \
-    npm cache clean --force && \
-    rm -rf /home/$NB_USER/.cache/yarn && \
-    rm -rf $CONDA_DIR/share/jupyter/lab/staging
     conda clean --all
 
 # Expose port for jupyterlab
