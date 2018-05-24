@@ -6,7 +6,7 @@
 # Distributed under the terms of the Modified BSD License.
 
 FROM gigantum/python3-minimal:latest
-LABEL maintainer="Gigantum <hello@gigantum.io>"
+LABEL maintainer="Gigantum <hello@gigantum.com>"
 
 # Install Python packages
 # Remove pyqt and qt pulled in for matplotlib since we're only ever going to
@@ -40,9 +40,9 @@ RUN conda install --quiet --yes nodejs && \
     'xarray=0.10*'  && \
     conda remove --quiet --yes --force qt pyqt && \
     conda clean --all && \
-    # Activate ipywidgets extension in the environment that runs the notebook server
+    # Activate ipywidgets for notebook server just in case
     jupyter nbextension enable --py widgetsnbextension --sys-prefix && \
-    # Also activate ipywidgets extension for JupyterLab
+    # Activate ipywidgets extensions for JupyterLab
     jupyter labextension install @jupyter-widgets/jupyterlab-manager@^0.35 && \
     jupyter labextension install jupyterlab_bokeh@^0.5.0 && \
     jupyter labextension install @jupyterlab/geojson-extension && \
