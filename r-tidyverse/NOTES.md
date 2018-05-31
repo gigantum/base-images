@@ -17,3 +17,10 @@ RUN install2.r --error --deps TRUE odbc pool
 
 Note also that I forgot about the install2.r program, which is what we should
 probably use.
+
+R is compiled against some X libraries. The absolute necessary items are
+addressed by apt-installing libxrender1 and libxext6, but I still see the
+`R_X11.so` / `libSM.so.6` warnings if I run from the console.
+
+Lastly, we are still not getting updates in the activity feed with images from
+ggplot2. This is a huge feature and my (Dav's) current priority.
