@@ -18,8 +18,15 @@ RUN apt-get update && apt-get -yq dist-upgrade && \
     locales \
     fonts-liberation \
     gosu \
-    git && \
-    apt-get clean 
+    git \
+    # The following two are required for a functional R
+    # There is little harm in including them in our python image as well - so
+    # they could be refactored into a core base image
+    # https://github.com/ContinuumIO/anaconda-issues/issues/4656
+    # Note that if you run in the console, R still complains about R_X11.so / libSM
+    libxrender1 \
+    libxext6 \
+    && apt-get clean 
 
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && locale-gen
 
@@ -41,17 +48,17 @@ RUN cd /tmp && wget --quiet https://repo.continuum.io/miniconda/Miniconda3-${MIN
     rm Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh && \
     # For now, we use the MS R Open packaged by Anaconda, so disabling conda-forge
     # This is currently the only difference from python3-minimal - and indeed,
-    # perhaps we should 
+    # perhaps we should just use anaconda?
     # conda config --system --prepend channels conda-forge && \
     conda config --system --set auto_update_conda false && \
     conda config --system --set show_channel_urls true && \
     conda update --all --quiet --yes 
 
-# Install and configure JupyterLab
-RUN conda install --quiet --yes -c conda-forge \
+# Install and configure JupyterLab (XXX again, not conda-forge, unlike python base)
+RUN conda install --quiet --yes \
     # Also bumped versions here as compared to python3-minimal
     'jupyterlab=0.32.*' \
-    'notebook=5.4.*' && \
+    'notebook=5.5.*' && \
     conda clean -tipsy && \
     rm -rf $CONDA_DIR/share/jupyter/lab/staging
 EXPOSE 8888
@@ -59,11 +66,16 @@ EXPOSE 8888
 # Set working dir
 WORKDIR $GIGANTUM_WORKDIR
 
-# Install Python packages
+# Install and specifically clean nodejs
 RUN conda install --quiet --yes nodejs \
-    && conda install --quiet --yes \
-    nomkl \
-    'mro-base=3.4.*' \
+    && npm cache --force clean \
+    && conda clean -tipsy \
+    && rm -rf $CONDA_DIR/share/jupyter/lab/staging
+
+# Install R packages
+RUN conda install --quiet --yes \
+    # This installs a lot of stuff
+    'r-essentials=3.4.*' \
     # We might want to break this up ourselves...
     r-tidyverse \
     # Currently r-tidyverse=1.2.1=mro343h889e2dd_0 expands to:
@@ -98,7 +110,6 @@ RUN conda install --quiet --yes nodejs \
     r-dt \
     r-irkernel \
     && conda clean -tipsy \
-    && npm cache --force clean \
     && rm -rf $CONDA_DIR/share/jupyter/lab/staging
 
 
