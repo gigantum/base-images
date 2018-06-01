@@ -6,8 +6,7 @@ description: |
 development_env:
   - jupyerlab
 packages:
+  # It's not clear that this matters in the inventory... leaving blank for now
   - apt:
   - pip:
   - conda3:
-    - r-tidyverse
-    - r-irkernel
