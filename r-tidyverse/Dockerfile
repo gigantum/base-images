@@ -28,8 +28,9 @@ RUN conda install --quiet --yes --override-channels --channel defaults \
     # in environment-components
     'r-essentials=3.4.*' \
     'r-tidyverse=1.2.*' \
-    # People also like this, kind of like a lower-level dplyr
-    r-dt=0.2 \
     # This makes Jupyter work
     'r-irkernel=0.8.*' \
+    # data.table is included in the above
+    # This is a nice javascript viz for tables called "DataTables", not relevant until we have shiny
+    # r-dt=0.2 \
     && conda clean --all
