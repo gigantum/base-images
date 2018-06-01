@@ -5,10 +5,9 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 
-# XXX temporarily setting to a published python3-minimal base-image as a
-# time-saving measure
-FROM gigantum/python3-minimal:1effaaea-2018-05-23
+FROM gigantum/python3-minimal:latest
 LABEL maintainer="Gigantum <hello@gigantum.io>"
+
 
 # Install system level dependencies
 RUN apt-get update && \
@@ -28,10 +27,9 @@ RUN conda install --quiet --yes --override-channels --channel defaults \
     # These install a lot of stuff. We'll write them broken out in the manifest
     # in environment-components
     'r-essentials=3.4.*' \
-    r-tidyverse \
+    'r-tidyverse=1.2.*' \
     # People also like this, kind of like a lower-level dplyr
-    r-dt \
+    r-dt=0.2 \
     # This makes Jupyter work
-    r-irkernel \
-    && conda clean -tipsy \
-    && rm -rf $CONDA_DIR/share/jupyter/lab/staging
+    'r-irkernel=0.8.*' \
+    && conda clean --all
