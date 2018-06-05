@@ -10,8 +10,8 @@ LABEL maintainer="Gigantum <hello@gigantum.io>"
 
 
 # Install system level dependencies
-RUN apt-get update && \
-    apt-get install -yq --no-install-recommends \
+RUN apt-get update \
+    && apt-get install -yq --no-install-recommends \
     # The following two are required for a functional R
     # There is little harm in including them in our python image as well - so
     # they could be refactored into a core base image
@@ -19,7 +19,8 @@ RUN apt-get update && \
     # Note that if you run in the console, R still complains about R_X11.so / libSM
     libxrender1 \
     libxext6 \
-    && apt-get clean
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /var/log/dpkg.log
 
 # Install R packages
 # For R, the Anaconda "official" packages seem better than conda-forge
