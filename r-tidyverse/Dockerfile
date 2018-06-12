@@ -5,9 +5,13 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 
-FROM gigantum/python3-minimal:latest
+# XXX temporary / undo!
+FROM gigantum/python3-minimal:1effaaea-2018-05-23
+# FROM gigantum/python3-minimal:latest
 LABEL maintainer="Gigantum <hello@gigantum.io>"
 
+# This is needed for tzdata to proceed, but should probably be set generally
+ENV DEBIAN_FRONTEND=noninteractive
 
 # Install system level dependencies
 RUN apt-get update \
@@ -19,6 +23,8 @@ RUN apt-get update \
     # Note that if you run in the console, R still complains about R_X11.so / libSM
     libxrender1 \
     libxext6 \
+    # Other basic R stuff breaks without the Olson database
+    tzdata \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /var/log/dpkg.log
 
