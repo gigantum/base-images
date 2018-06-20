@@ -75,8 +75,8 @@ This is lightweight approach that doesn't require submission and review of a
 separate contributor agreement.  Code is signed directly by the developer using
 facilities built into git.
 
-Please see more extensive [contributor information in the gtm
-repository](https://github.com/gigantum/gtm/docs/contributing.md).
+Please see [`docs/contributing.md`  in the gtm
+repository](https://github.com/gigantum/gtm/tree/integration/docs/contributing.md).
 
 ## Credits
 
