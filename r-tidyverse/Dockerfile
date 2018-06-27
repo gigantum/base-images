@@ -5,8 +5,7 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 
-#FROM gigantum/python3-minimal:latest
-FROM gigantum/python3-minimal:df4dbd9a-2018-06-27
+FROM gigantum/python3-minimal:latest
 LABEL maintainer="Gigantum <hello@gigantum.io>"
 
 # This is needed for tzdata to proceed, but should probably be set generally
