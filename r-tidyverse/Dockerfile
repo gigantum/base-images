@@ -24,7 +24,7 @@ RUN apt-get update \
     # Other basic R stuff breaks without the Olson database
     tzdata \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /var/log/dpkg.log
+    && rm -f /var/log/dpkg.log
 
 # Install R packages
 # For R, the Anaconda "official" packages seem better than conda-forge

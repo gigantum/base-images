@@ -13,6 +13,7 @@ RUN apt-get update && \
     apt-get install -yq --no-install-recommends \
     wget \
     bzip2 \
+    build-essential \
     ca-certificates \
     sudo \
     locales \
