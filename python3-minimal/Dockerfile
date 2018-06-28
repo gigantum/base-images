@@ -13,8 +13,10 @@ RUN apt-get update && \
     apt-get install -yq --no-install-recommends \
     wget \
     bzip2 \
-    build-essential \
     ca-certificates \
+    gcc \
+    g++ \
+    make \
     sudo \
     locales \
     fonts-liberation \
