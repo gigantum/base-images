@@ -1,5 +1,5 @@
-id: "python3-cudnn"
-name: "Python3 CUDA and cuDNN support"
+id: "python3-cudnn9.0"
+name: "Python3 CUDA 9.0 and cuDNN for Ubuntu 16.04"
 description: "A Base containing Python 3.6, CUDA, cuDNN, and JupyterLab with no additional packages"
 development_env:
   - jupyterlab
