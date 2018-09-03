@@ -21,6 +21,7 @@ RUN apt-get update && \
     locales \
     fonts-liberation \
     gosu \
+    # Various libraries break without the Olson database included here
     tzdata \
     git && \
     apt-get clean 

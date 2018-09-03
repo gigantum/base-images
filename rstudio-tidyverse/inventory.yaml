@@ -1,0 +1,9 @@
+id: "rstudio-tidyverse"
+name: "RStudio Tidyverse"
+description: "An RStudio Base with R 3.5 and the Tidyverse packages"
+development_env:
+  - rstudio
+packages:
+  - apt:
+  - pip:
+  - conda3:
