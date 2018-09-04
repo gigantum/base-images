@@ -33,6 +33,8 @@ RUN apt-get update \
         r-cran-tidyverse \
         r-cran-data.table \
         r-cran-devtools \
+        # Needed by IRkernel
+        r-cran-repr \
         # OpenBLAS makes R much faster - it will be default upon install
         libopenblas-base \
         libopenblas-dev \
