@@ -6,7 +6,8 @@
 # Distributed under the terms of the Modified BSD License.
 
 FROM ubuntu:18.04
-LABEL maintainer="Gigantum <hello@gigantum.com>"
+LABEL maintainer="Gigantum <support@gigantum.com>"
+ENV DEBIAN_FRONTEND noninteractive
 
 # Install system level dependencies
 RUN apt-get update && \
@@ -17,10 +18,10 @@ RUN apt-get update && \
     gcc \
     g++ \
     make \
-    sudo \
     locales \
     fonts-liberation \
     gosu \
+    tzdata \
     git && \
     apt-get clean 
 
@@ -31,7 +32,7 @@ ENV CONDA_DIR=/opt/conda \
     GIGANTUM_SHARE=/mnt/share \
     GIGANTUM_WORKDIR=/mnt/labbook \
     SHELL=/bin/bash \
-    MINICONDA_VERSION=4.5.1 \
+    MINICONDA_VERSION=4.5.4 \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8
 ENV PATH=$CONDA_DIR/bin:$PATH \
@@ -39,14 +40,15 @@ ENV PATH=$CONDA_DIR/bin:$PATH \
 
 # Install conda, python, and jupyter
 RUN cd /tmp && wget --quiet https://repo.continuum.io/miniconda/Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh && \
-    echo "0c28787e3126238df24c5d4858bd0744 *Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh" | md5sum -c - && \
+    echo "a946ea1d0c4a642ddf0c3a26a18bb16d *Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh" | md5sum -c - && \
     /bin/bash Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
     rm Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh && \
     conda config --system --prepend channels conda-forge && \
     conda config --system --set auto_update_conda false && \
     conda config --system --set show_channel_urls true && \
     conda update --all --quiet --yes && \
-    conda install --quiet --yes -c conda-forge 'jupyterlab=0.32.*' 'notebook=5.5.*' && \
+    conda install --quiet --yes -c conda-forge 'jupyterlab=0.34.*' 'notebook=5.6.*' && \
+    conda install pip && \
     conda clean --all
 
 # Expose port for jupyterlab
