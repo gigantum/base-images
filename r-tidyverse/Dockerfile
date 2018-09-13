@@ -46,9 +46,15 @@ RUN apt-get update \
 # options(repos=c(CRAN="https://cran.microsoft.com/snapshot/2018-07-23/"))
 RUN echo 'options(repos = c(CRAN = "https://cloud.r-project.org/"))' >> /etc/R/Rprofile.site
 
+# The core of bioconductor is automatically installed by things like
+# neuroconductor. This will speed up one-off package installation for repos
+# that assume this as a pre-req:
+RUN R -e 'source("https://bioconductor.org/biocLite.R"); biocLite()' \
+    && rm -rf /tmp/*/downloaded_packages
+
 # NOTE the most efficient approach to installing R package (e.g. foo) from
 # source is to do this first:
 # sudo apt-get build-dep r-cran-foo
 
 # Install IRkernal and set up the installed R interpreter in Jupyter
-RUN R -e "devtools::install_github('IRkernel/IRkernel'); IRkernel::installspec()"
+RUN R -e "devtools::install_github('IRkernel/IRkernel'); IRkernel::installspec(user=FALSE)"
