@@ -14,46 +14,43 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Install system level dependencies
 RUN apt-get update \ 
     && apt-get install -yq --no-install-recommends \
+        wget \
         bzip2 \
         ca-certificates \
-        dirmngr \
+        # dirmngr \
+        locales \
         fonts-liberation \
         gosu \
+        # Various libraries break without the Olson database included here
+        tzdata \
         git \
+        # Enables add-apt-repository
+        software-properties-common \
         # These two packages required to import keys into apt
         gpg \
         gpg-agent \
-        # These two are maybe not required - were necessary for conda's R to work
-        libxrender1 \
-        libxext6 \
-        locales \
-        sudo \
-        # basic R stuff breaks without the Olson tz database
-        tzdata \
-        wget \
-    && echo "deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/" > /etc/apt/sources.list.d/cran.list \
     # Should we make this more robust? - can break because of docker networking
-    # e.g., on Windows
+    # e.g., on Windows. See r-tidyverse base for an alternative.
     && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9 \
-    # We do another update now that we can securely use the CRAN packages
-    && apt-get update \ 
+    && echo "deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/" > /etc/apt/sources.list.d/cran.list \
+    # This also triggers an update as of 18.04/bionic
+    && add-apt-repository ppa:marutter/c2d4u3.5 \
     && apt-get install -yq --no-install-recommends \
         r-base \
         # We get our compilers here
         r-base-dev \
         r-recommended \
-        # There's not a cran package for 3.5 and RcppGSL, so we will build it
-        # if needed
-        libgsl-dev \
+        r-cran-tidyverse \
+        r-cran-data.table \
+        r-cran-devtools \
+        # TODO: There's not a cran package for 3.5 and RcppGSL, so we may build
+        # it if needed. But it MAY be in the c2d4u3.5 PPA...
+        # libgsl-dev \
         # OpenBLAS makes R much faster - it will be default upon install
         libopenblas-base \
         libopenblas-dev \
-    # XXX Maybe we should use MRAN? It would certainly make subsequent projects
-    # more reproducible, but is not in line with how we're using pip, conda,
-    # etc. e.g.:
-    # options(repos=c(CRAN="https://cran.microsoft.com/snapshot/2018-07-23/"))
     && echo 'options(repos = c(CRAN = "https://cloud.r-project.org/"))' >> /etc/R/Rprofile.site \
-    # RStudio requirements
+    # RStudio requirements - keeping separate with thoughts of a refactor
     && apt-get install -yq --no-install-recommends \
         psmisc \
         libapparmor1 \
@@ -97,11 +94,6 @@ EXPOSE 8787
 
 # Set working dir
 WORKDIR $GIGANTUM_WORKDIR
-
-# Packages
-
-RUN Rscript -e "install.packages(c('tidyverse', 'lme4', 'multcomp', 'data.table'))" \
-    && rm -rf /tmp/*/downloaded_packages
 
 # CMD may be updated during final image assembly, but this keeps a container alive.
 CMD ["tail -f /dev/null"]
