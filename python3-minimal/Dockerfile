@@ -24,7 +24,7 @@ RUN apt-get update && \
     # Various libraries break without the Olson database included here
     tzdata \
     git && \
-    apt-get clean 
+    apt-get clean
 
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && locale-gen
 
