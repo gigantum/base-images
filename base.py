@@ -117,7 +117,7 @@ def main():
                         action='store_true',
                         help="Only build the image. Do not publish after build is complete.")
     parser.add_argument("--repository", "-r",
-                        help="Push to a non-default repository. Use this option if you are an open source user"
+                        help="Push to a non-default repository. Use this option if you are an open source user "
                              "and can't push to Gigantum Official repositories. Format: `namespace/repository`")
     parser.add_argument("--no-cache",
                         default=False,
