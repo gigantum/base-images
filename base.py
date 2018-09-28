@@ -53,7 +53,7 @@ class BaseImageBuilder(object):
         client = docker.from_env()
 
         named_tag = f"{namespace}/{repository}:{self._generate_image_tag_suffix()}"
-        build_dir = os.path.join(self.get_root_dir(), 'bases', image_name)
+        build_dir = os.path.join(self.get_root_dir(), image_name)
 
         [print(ln[list(ln.keys())[0]], end='') for ln in client.api.build(path=build_dir,
                                                                           tag=named_tag,
@@ -130,7 +130,7 @@ def main():
     builder = BaseImageBuilder()
 
     # Validate image is available to build
-    if not os.path.exists(os.path.join(builder.get_root_dir(), 'bases', args.base_image)):
+    if not os.path.exists(os.path.join(builder.get_root_dir(), args.base_image)):
         raise ValueError(f"Base not found: {args.base_image}")
 
     # Set target repo info
@@ -164,8 +164,6 @@ def main():
                   f" both the repository and branch if not default)")
 
             print(f"\n\nIf pushing official bases, remember they `go live` as soon as your PR is accepted to master.")
-
-
 
 
 if __name__ == '__main__':
