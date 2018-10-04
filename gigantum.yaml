@@ -1,0 +1,7 @@
+id: gigantum-official
+name: Gigantum Official Base Images
+url: https://github.com/gigantum/base-images.git
+maintainer:
+  name: Gigantum
+  email: support@gigantum.com
+  url: https://gigantum.com
