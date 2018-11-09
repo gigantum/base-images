@@ -14,7 +14,7 @@ image:
   server: hub.docker.com
   namespace: gigantum
   repository: python3-cudnn9.0
-  tag: d50c9706-2018-08-01
+  tag: 8316341115-2018-11-09
 languages:
   - python3
 development_tools:
