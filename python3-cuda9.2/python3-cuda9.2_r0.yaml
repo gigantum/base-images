@@ -13,7 +13,7 @@ cuda_version: 9.2
 image:
   server: hub.docker.com
   namespace: gigantum
-  repository: python3-cuda9.2
+  repository: python3-cudnn9.2
   tag: 2c82cb31b6-2018-11-20
 languages:
   - python3
