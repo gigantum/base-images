@@ -1,7 +1,7 @@
 id: "python3-cuda9.0"
 name: "GPU CUDA 9.0 Ubuntu 16.04 Python3 Minimal"
-description: "A Ubuntu 16.04 base with CUDA GPU accessibility with Python 3.6 and JupyterLab only"
-readme: "A base with CUDA GPU accessibility with Python 3.6 and JupyterLab only"
+description: "An Ubuntu 16.04 base with CUDA GPU accessibility with Python 3.6 and JupyterLab only"
+readme: "An Ubuntu 16.04 base with CUDA GPU accessibility with Python 3.6 and JupyterLab only"
 revision: 1
 schema: 1
 tags: ['ubuntu', 'cuda', 'gpu', 'machine-learning', 'python3', 'jupyterlab']
