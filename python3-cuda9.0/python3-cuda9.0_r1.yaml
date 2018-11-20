@@ -1,4 +1,4 @@
-id: "python3-cudnn9.0"
+id: "python3-cuda9.0"
 name: "GPU CUDA 9.0 Ubuntu 16.04 Python3 Minimal"
 description: "A Ubuntu 16.04 base with CUDA GPU accessibility with Python 3.6 and JupyterLab only"
 readme: "A base with CUDA GPU accessibility with Python 3.6 and JupyterLab only"
@@ -13,7 +13,7 @@ cuda_version: "9.0"
 image:
   server: hub.docker.com
   namespace: gigantum
-  repository: python3-cudnn9.0
+  repository: python3-cuda9.0
   tag: 2c82cb31b6-2018-11-20
 languages:
   - python3
