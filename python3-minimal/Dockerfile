@@ -10,20 +10,20 @@ LABEL maintainer="Gigantum <support@gigantum.com>"
 ENV DEBIAN_FRONTEND noninteractive
 
 # Install system level dependencies
-RUN apt-get update && \
-    apt-get install -yq --no-install-recommends \
-    wget \
-    bzip2 \
-    ca-certificates \
-    gcc \
-    g++ \
-    make \
-    locales \
-    fonts-liberation \
-    gosu \
-    tzdata \
-    git && \
-    apt-get clean
+RUN apt-get update \
+    && apt-get install -yq --no-install-recommends \
+        wget \
+        bzip2 \
+        ca-certificates \
+        gcc \
+        g++ \
+        make \
+        locales \
+        fonts-liberation \
+        gosu \
+        tzdata \
+        git \
+    && apt-get clean
 
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && locale-gen
 
@@ -33,6 +33,7 @@ ENV CONDA_DIR=/opt/conda \
     GIGANTUM_WORKDIR=/mnt/labbook \
     SHELL=/bin/bash \
     MINICONDA_VERSION=4.5.4 \
+    MINICONDA_MD5=a946ea1d0c4a642ddf0c3a26a18bb16d \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8
 ENV PATH=$CONDA_DIR/bin:$PATH \
@@ -40,7 +41,7 @@ ENV PATH=$CONDA_DIR/bin:$PATH \
 
 # Install conda, python, and jupyter
 RUN cd /tmp && wget --quiet https://repo.continuum.io/miniconda/Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh && \
-    echo "a946ea1d0c4a642ddf0c3a26a18bb16d *Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh" | md5sum -c - && \
+    echo "$MINICONDA_MD5 *Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh" | md5sum -c - && \
     /bin/bash Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
     rm Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh && \
     # conda config --system --prepend channels conda-forge && \
