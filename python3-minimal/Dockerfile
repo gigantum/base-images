@@ -44,11 +44,10 @@ RUN cd /tmp && wget --quiet https://repo.continuum.io/miniconda/Miniconda3-${MIN
     echo "$MINICONDA_MD5 *Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh" | md5sum -c - && \
     /bin/bash Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
     rm Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh && \
-    # conda config --system --prepend channels conda-forge && \
+    conda config --system --prepend channels conda-forge && \
     conda config --system --set auto_update_conda false && \
     conda config --system --set show_channel_urls true && \
     conda update --all --quiet --yes && \
-    # conda install --quiet --yes -c conda-forge 'jupyterlab=0.35.*' 'notebook=5.6.*' && \
     conda install --quiet --yes 'jupyterlab=0.35.*' 'notebook=5.7.*' && \
     # This is currently installed by default by conda, but it's mission
     # critical so we make it explicit
