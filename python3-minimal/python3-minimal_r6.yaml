@@ -1,7 +1,14 @@
 id: "python3-minimal"
 name: "Python3 Minimal"
 description: "A minimal Base containing Python 3.6 and JupyterLab with no additional packages"
-readme: "A minimal Base containing Python 3.6 and JupyterLab with no additional packages"
+readme: |
+  A minimal Base containing Python 3.6 and JupyterLab with no additional packages
+
+  The following JupyterLab widgets are configured:
+    - @jupyterlab/toc
+    - @jupyterlab/statusbar
+    - @jupyter-widgets/jupyterlab-manager
+
 revision: 6
 schema: 1
 tags: ['ubuntu', 'python3', 'jupyterlab']

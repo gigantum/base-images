@@ -3,7 +3,7 @@
 # which are Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 
-FROM gigantum/python3-minimal:bc0afaeed4-2018-12-06
+FROM gigantum/python3-minimal:a55419bd77-2019-01-03
 LABEL maintainer="Gigantum <support@gigantum.com>"
 
 
@@ -22,28 +22,28 @@ RUN apt-get update \
 RUN conda install --quiet --yes nodejs && \
     conda install --quiet --yes \
         'blas=*=openblas' \
-        'bokeh=1.0*' \
-        'cloudpickle=0.6*' \
-        'cython=0.29*' \
-        'dill=0.2*' \
-        'h5py=2.7*' \
-        'hdf5=1.10*' \
-        'ipywidgets=7.4*' \
-        'matplotlib=2.2*' \
-        'numba=0.41*' \
-        'numexpr=2.6*' \
-        'pandas=0.23*' \
-        'patsy=0.5*' \
-        'plotly=3.4*' \
-        'scikit-image=0.14*' \
-        'scikit-learn=0.20*' \
-        'scipy=1.1*' \
-        'seaborn=0.9*' \
-        'sqlalchemy=1.2*' \
-        'statsmodels=0.9*' \
-        'sympy=1.3*' \
-        'xarray=0.11*' \
-        'xlrd=1.1*'  \
+        'bokeh=1.0' \
+        'cloudpickle=0.6' \
+        'cython=0.29' \
+        'dill=0.2' \
+        'h5py=2.7' \
+        'hdf5=1.10' \
+        'ipywidgets=7.4' \
+        'matplotlib=2.2' \
+        'numba=0.41' \
+        'numexpr=2.6' \
+        'pandas=0.23' \
+        'patsy=0.5' \
+        'plotly=3.4' \
+        'scikit-image=0.14' \
+        'scikit-learn=0.20' \
+        'scipy=1.1' \
+        'seaborn=0.9' \
+        'sqlalchemy=1.2' \
+        'statsmodels=0.9' \
+        'sympy=1.3' \
+        'xarray=0.11' \
+        'xlrd=1.1'  \
     && conda remove --quiet --yes --force qt pyqt && \
     conda clean --all
 

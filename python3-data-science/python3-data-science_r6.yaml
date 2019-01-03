@@ -4,13 +4,10 @@ description: "A Base containing Python 3.6, JupyterLab, and common data science 
 readme: |
   A Base containing Python 3.6, JupyterLab, and common Python data science packages pre-installed. OpenBLAS is enabled.
 
-  The following JupyterLab widgets are configured:
+  The following JupyterLab widgets are configured on top of python3-minimal:
   	- jupyterlab_bokeh
   	- @jupyterlab/geojson-extension
     - @jupyterlab/plotly-extension
-    - @jupyterlab/toc
-    - @jupyterlab/statusbar
-    - @jupyter-widgets/jupyterlab-manager
 
 revision: 6
 schema: 1
@@ -23,7 +20,7 @@ image:
   server: hub.docker.com
   namespace: gigantum
   repository: python3-data-science
-  tag: 034aad5ecd-2018-12-07
+  tag: 1c6b32623e-2019-01-03
 languages:
   - python3
 development_tools:
