@@ -47,11 +47,28 @@ RUN cd /tmp && wget --quiet https://repo.continuum.io/miniconda/Miniconda3-${MIN
     conda config --system --prepend channels conda-forge && \
     conda config --system --set auto_update_conda false && \
     conda config --system --set show_channel_urls true && \
+    # We update conda explicitly to get any gains in performance, etc.
+    conda update --quiet --yes conda && \
     conda update --all --quiet --yes && \
-    conda install --quiet --yes 'jupyterlab=0.35.*' 'notebook=5.7.*' && \
+    # notebook 5.3 through 5.7.1 have security holes
+    conda install --quiet --yes -c conda-forge 'jupyterlab=0.35' 'notebook>=5.7.2,<5.8' && \
     # This is currently installed by default by conda, but it's mission
     # critical so we make it explicit
     conda install pip && \
+    conda clean --all
+
+# Install some foundational widgets for monitoring resources and navigation
+RUN conda install --quiet --yes nodejs && \
+    pip install nbresuse && \
+    # unlcear from statusbar docs if this is necessary for jupyterlab, but doesn't hurt
+    jupyter serverextension enable --py nbresuse
+    jupyter labextension install @jupyterlab/toc && \
+    jupyter labextension install @jupyterlab/statusbar && \
+    npm cache clean --force && \
+    rm -rf $CONDA_DIR/share/jupyter/lab/staging && \
+    rm -rf /root/.cache/yarn && \
+    rm -rf /root/.node-gyp
+    conda remove --quiet --yes nodejs && \
     conda clean --all
 
 # Expose port for jupyterlab

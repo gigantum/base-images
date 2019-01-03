@@ -47,17 +47,14 @@ RUN conda install --quiet --yes nodejs && \
     && conda remove --quiet --yes --force qt pyqt && \
     conda clean --all
 
-RUN pip install nbresuse && \
-    jupyter serverextension enable --py nbresuse && \
+# Set up additional widgets
+RUN jupyter labextension install jupyterlab_bokeh && \
+    jupyter labextension install @jupyterlab/geojson-extension && \
+    jupyter labextension install @jupyterlab/plotly-extension && \
     # Activate ipywidgets for notebook server just in case
     jupyter nbextension enable --py widgetsnbextension --sys-prefix && \
     # Activate ipywidgets extensions for JupyterLab
     jupyter labextension install @jupyter-widgets/jupyterlab-manager && \
-    jupyter labextension install jupyterlab_bokeh && \
-    jupyter labextension install @jupyterlab/geojson-extension && \
-    jupyter labextension install @jupyterlab/plotly-extension && \
-    jupyter labextension install @jupyterlab/toc && \
-    jupyter labextension install @jupyterlab/statusbar && \
     npm cache clean --force && \
     rm -rf $CONDA_DIR/share/jupyter/lab/staging && \
     rm -rf /root/.cache/yarn && \
