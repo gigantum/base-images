@@ -47,9 +47,10 @@ RUN cd /tmp && wget --quiet https://repo.continuum.io/miniconda/Miniconda2-${MIN
     # conda config --system --prepend channels conda-forge && \
     conda config --system --set auto_update_conda false && \
     conda config --system --set show_channel_urls true && \
+    conda update --quiet --yes conda && \
     conda update --all --quiet --yes && \
-    # conda install --quiet --yes -c conda-forge 'jupyterlab=0.33.*' 'notebook=5.7.*' && \
-    conda install --quiet --yes 'jupyterlab=0.33.*' 'notebook=5.7.*' && \
+    # notebook 5.3 through 5.7.1 have security holes
+    conda install --quiet --yes -c conda-forge 'jupyterlab=0.33' 'notebook>=5.7.2,<5.8' && \
     conda install pip && \
     conda clean --all
 
