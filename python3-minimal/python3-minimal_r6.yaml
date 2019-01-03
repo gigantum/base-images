@@ -13,7 +13,7 @@ image:
   server: hub.docker.com
   namespace: gigantum
   repository: python3-minimal
-  tag: bc0afaeed4-2018-12-06
+  tag: a55419bd77-2019-01-03
 languages:
   - python3
 development_tools:
