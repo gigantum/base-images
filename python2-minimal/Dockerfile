@@ -23,7 +23,7 @@ RUN apt-get update && \
     gosu \
     tzdata \
     git && \
-    apt-get clean 
+    apt-get clean
 
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && locale-gen
 
@@ -32,7 +32,8 @@ ENV CONDA_DIR=/opt/conda \
     GIGANTUM_SHARE=/mnt/share \
     GIGANTUM_WORKDIR=/mnt/labbook \
     SHELL=/bin/bash \
-    MINICONDA_VERSION=4.5.4 \
+    MINICONDA_VERSION=4.5.11 \
+    MINICONDA_MD5=458324438b7b0e5afcc272b63d44195d \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8
 ENV PATH=$CONDA_DIR/bin:$PATH \
@@ -40,14 +41,16 @@ ENV PATH=$CONDA_DIR/bin:$PATH \
 
 # Install conda and python
 RUN cd /tmp && wget --quiet https://repo.continuum.io/miniconda/Miniconda2-${MINICONDA_VERSION}-Linux-x86_64.sh && \
-    echo "8a1c02f6941d8778f8afad7328265cf5 *Miniconda2-${MINICONDA_VERSION}-Linux-x86_64.sh" | md5sum -c - && \
+    echo "$MINICONDA_MD5 *Miniconda2-${MINICONDA_VERSION}-Linux-x86_64.sh" | md5sum -c - && \
     /bin/bash Miniconda2-${MINICONDA_VERSION}-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
     rm Miniconda2-${MINICONDA_VERSION}-Linux-x86_64.sh && \
     conda config --system --prepend channels conda-forge && \
     conda config --system --set auto_update_conda false && \
     conda config --system --set show_channel_urls true && \
+    conda update --quiet --yes conda && \
     conda update --all --quiet --yes && \
-    conda install --quiet --yes -c conda-forge 'jupyterlab=0.32.*' 'notebook=5.5.*' && \
+    # notebook 5.3 through 5.7.1 have security holes
+    conda install --quiet --yes -c conda-forge 'jupyterlab=0.33' 'notebook>=5.7.2,<5.8' && \
     conda install pip && \
     conda clean --all
 

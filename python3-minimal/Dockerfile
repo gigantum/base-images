@@ -10,20 +10,20 @@ LABEL maintainer="Gigantum <support@gigantum.com>"
 ENV DEBIAN_FRONTEND noninteractive
 
 # Install system level dependencies
-RUN apt-get update && \
-    apt-get install -yq --no-install-recommends \
-    wget \
-    bzip2 \
-    ca-certificates \
-    gcc \
-    g++ \
-    make \
-    locales \
-    fonts-liberation \
-    gosu \
-    tzdata \
-    git && \
-    apt-get clean 
+RUN apt-get update \
+    && apt-get install -yq --no-install-recommends \
+        wget \
+        bzip2 \
+        ca-certificates \
+        gcc \
+        g++ \
+        make \
+        locales \
+        fonts-liberation \
+        gosu \
+        tzdata \
+        git \
+    && apt-get clean
 
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && locale-gen
 
@@ -33,23 +33,44 @@ ENV CONDA_DIR=/opt/conda \
     GIGANTUM_WORKDIR=/mnt/labbook \
     SHELL=/bin/bash \
     MINICONDA_VERSION=4.5.4 \
+    MINICONDA_MD5=a946ea1d0c4a642ddf0c3a26a18bb16d \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8
 ENV PATH=$CONDA_DIR/bin:$PATH \
     JUPYTER_RUNTIME_DIR=$GIGANTUM_SHARE/jupyter/runtime
 
 # Install conda, python, and jupyter
-RUN cd /tmp && wget --quiet https://repo.continuum.io/miniconda/Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh && \
-    echo "a946ea1d0c4a642ddf0c3a26a18bb16d *Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh" | md5sum -c - && \
-    /bin/bash Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
-    rm Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh && \
-    conda config --system --prepend channels conda-forge && \
-    conda config --system --set auto_update_conda false && \
-    conda config --system --set show_channel_urls true && \
-    conda update --all --quiet --yes && \
-    conda install --quiet --yes -c conda-forge 'jupyterlab=0.34.*' 'notebook=5.6.*' && \
-    conda install pip && \
-    conda clean --all
+RUN cd /tmp \
+    && wget --quiet https://repo.continuum.io/miniconda/Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh \
+    && echo "$MINICONDA_MD5 *Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh" | md5sum -c - \
+    && /bin/bash Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh -f -b -p $CONDA_DIR \
+    && rm Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh \
+    && conda config --system --prepend channels conda-forge \
+    && conda config --system --set auto_update_conda false \
+    && conda config --system --set show_channel_urls true \
+    # We update conda explicitly to get any gains in performance, etc.
+    && conda update --quiet --yes conda \
+    && conda update --all --quiet --yes \
+    # notebook 5.3 through 5.7.1 have security holes
+    && conda install --quiet --yes -c conda-forge 'jupyterlab=0.35' 'notebook>=5.7.2,<5.8' \
+    # This is currently installed by default by conda, but it's mission
+    # critical so we make it explicit
+    && conda install pip \
+    && conda clean --all
+
+# Install some foundational widgets for monitoring resources and navigation
+RUN conda install --quiet --yes nodejs \
+    && pip install nbresuse \
+    # unlcear from statusbar docs if this is necessary for jupyterlab, but doesn't hurt
+    && jupyter serverextension enable --py nbresuse \
+    && jupyter labextension install @jupyterlab/toc \
+    && jupyter labextension install @jupyterlab/statusbar \
+    && npm cache clean --force \
+    && rm -rf $CONDA_DIR/share/jupyter/lab/staging \
+    && rm -rf /root/.cache/yarn \
+    && rm -rf /root/.node-gyp \
+    && conda remove --quiet --yes nodejs \
+    && conda clean --all
 
 # Expose port for jupyterlab
 EXPOSE 8888

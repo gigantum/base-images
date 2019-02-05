@@ -3,7 +3,7 @@
 # The below is a relatively straightforward adaptation of directions at
 # https://cran.r-project.org/bin/linux/ubuntu/README.html
 
-FROM gigantum/python3-minimal:latest
+FROM gigantum/python3-minimal:a55419bd77-2019-01-03
 LABEL maintainer="Gigantum <support@gigantum.com>"
 
 # I downloaded this key using
@@ -35,6 +35,8 @@ RUN apt-get update \
         r-cran-devtools \
         # Needed by IRkernel
         r-cran-repr \
+        r-cran-pbdzmq \
+        r-cran-uuid \
         # OpenBLAS makes R much faster - it will be default upon install
         libopenblas-base \
         libopenblas-dev \
@@ -44,17 +46,21 @@ RUN apt-get update \
 # more reproducible, but is not in line with how we're using pip, conda,
 # etc. e.g.:
 # options(repos=c(CRAN="https://cran.microsoft.com/snapshot/2018-07-23/"))
-RUN echo 'options(repos = c(CRAN = "https://cloud.r-project.org/"))' >> /etc/R/Rprofile.site
-
-# The core of bioconductor is automatically installed by things like
-# neuroconductor. This will speed up one-off package installation for repos
-# that assume this as a pre-req:
-RUN R -e 'source("https://bioconductor.org/biocLite.R"); biocLite()' \
+RUN echo 'options(repos = c(CRAN = "https://cloud.r-project.org/"))' >> /etc/R/Rprofile.site \
+    # Also Install IRkernal and set up the installed R interpreter in Jupyter
+    # Note that even with upgrade_dependencies=FALSE, we upgrade pbdZMQ
+    && R -e "devtools::install_github('IRkernel/IRkernel', ref='0.8.14', upgrade_dependencies=FALSE); IRkernel::installspec(user=FALSE)" \
+    # The above will error out by attempting to use the IRkernel package.
+    # An alternative is to ensure packages are installed as follows:
+    # The below did not succeed even when biocLite() was run above
+    # && R -e "stopifnot(all(c('IRkernel', 'BiocManager') %in% installed.packages()[, 'Package']))" \
     && rm -rf /tmp/*/downloaded_packages
+    # The core of bioconductor is automatically installed by things like
+    # neuroconductor. This will speed up one-off package installation for repos
+    # that assume this as a pre-req:
+    # BUT, it also seems to override numerous packages from CRAN... so skipping for now
+    # && R -e 'source("https://bioconductor.org/biocLite.R"); biocLite()' \
 
 # NOTE the most efficient approach to installing R package (e.g. foo) from
 # source is to do this first:
 # sudo apt-get build-dep r-cran-foo
-
-# Install IRkernal and set up the installed R interpreter in Jupyter
-RUN R -e "devtools::install_github('IRkernel/IRkernel'); IRkernel::installspec(user=FALSE)"
