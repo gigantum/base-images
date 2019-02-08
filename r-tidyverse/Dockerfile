@@ -3,7 +3,7 @@
 # The below is a relatively straightforward adaptation of directions at
 # https://cran.r-project.org/bin/linux/ubuntu/README.html
 
-FROM gigantum/python3-minimal:a55419bd77-2019-01-03
+FROM gigantum/python3-minimal:17b8e50607-2019-02-08
 LABEL maintainer="Gigantum <support@gigantum.com>"
 
 # I downloaded this key using
@@ -42,11 +42,11 @@ RUN apt-get update \
         libopenblas-dev \
     && apt-get clean
 
-# XXX Maybe we should use MRAN? It would certainly make subsequent projects
+# TODO DC Maybe we should use MRAN? It would certainly make subsequent projects
 # more reproducible, but is not in line with how we're using pip, conda,
 # etc. e.g.:
 # options(repos=c(CRAN="https://cran.microsoft.com/snapshot/2018-07-23/"))
-RUN echo 'options(repos = c(CRAN = "https://cloud.r-project.org/"))' >> /etc/R/Rprofile.site \
+RUN echo 'options(repos = c(CRAN = "https://cloud.r-project.org/"))\n' >> /etc/R/Rprofile.site \
     # Also Install IRkernal and set up the installed R interpreter in Jupyter
     # Note that even with upgrade_dependencies=FALSE, we upgrade pbdZMQ
     && R -e "devtools::install_github('IRkernel/IRkernel', ref='0.8.14', upgrade_dependencies=FALSE); IRkernel::installspec(user=FALSE)" \

@@ -41,7 +41,8 @@ individual bases. Simply run `python3 base.py <base-name>` to build and push the
 ```
 $ python3 base.py -h
 
-usage: base.py [-h] [--build-only] [--repository REPOSITORY] [--no-cache]
+usage: base.py [-h] [--build-only] [--namespace NAMESPACE] [--no-cache]
+               [--generate-base-config-yaml]
                base_image
 
 A simple tool to build and publish base images to DockerHub. 
@@ -51,15 +52,17 @@ A simple tool to build and publish base images to DockerHub.
   Run `python3 base.py -h` to view available options
 
 positional arguments:
-  base_image            Name of the base image to build (same as the directory name)
+  base_image            Name of the base image to build (same as the directory name) or the string 'all' if you want to build all the images at once (this is useful when simply rebuilding bases for security updates)
 
 optional arguments:
   -h, --help            show this help message and exit
   --build-only, -b      Only build the image. Do not publish after build is complete.
-  --repository REPOSITORY, -r REPOSITORY
-                        Push to a non-default repository. Use this option if you are an open source user and can't push to 
-                        Gigantum Official repositories. Format: `namespace/repository`
+  --namespace NAMESPACE, -n NAMESPACE
+                        Push to a non-default namespace. Use this option if you are an open source user and can't push to Gigantum Official repositories.
   --no-cache            Boolean indicating if docker cache should be ignored
+  --generate-base-config-yaml, -g
+                        Boolean indicating if base image configuration files should be auto-generated after publish operation succeeds
+
 
 ```
 
@@ -71,6 +74,17 @@ To test, edit the Client config file to add `@branch-name` to the end of the rep
 
 Once a PR is accepted and merged to `master` the base becomes available to all users.
 
+### Templating Support
+
+Sometimes you want to reuse most of a Base dockerfile, and change just a few parameters. This can be done through 
+template support and docker build args. An example of how this works can be seen with the `python3-minimal` base, 
+which is built using different values for the `FROM` instruction.
+
+To enable templating, instead of a Dockerfile in the base directory, create `dockerfile_template.json`. The base
+Dockerfile should instead be written to `_template/<template_name>/Dockerfile`. Any arguments to be set at build-time 
+should be set via `ARG` instructions in the Dockerfile with the values set in the associated `dockerfile_template.json`
+file.
+
 ### Custom Base Images
 
 If you wish to use different bases than the "official" Gigantum bases included here (master branch is default in the
@@ -78,11 +92,26 @@ Gigantum Client), you can create your own. We will not accept PRs targeting spec
 improvements and generally useful contributions. For specific use bases, try the following workflow:
 
 - Fork this repository
-- Create a new base by copying and editing an existing one
+- Create a new base by copying and editing an existing base directory
 - Create a new repository on DockerHub for your base
-- Build and publish your base using `python3 base.py <base-name> --repository <your-namespace>/<repository-name>`
+- Build and publish your base using `python3 base.py <base-name> --namespace <your-dockerhub-namespace>`
 - Update the base spec yaml file with the tag provided after build and publish (should start at revision 0)
 - Commit changes and push to your fork on GitHub
 - Update the configuration file for your Gigantum Client instance to point to your fork instead of this repository
-- Restart Gigantum
+    - In your Gigantum working directory (`~/gigantum`) create a config file override. To do this, write the following to
+    `~/gigantum/.labmanager/config.yaml`
+    
+    ```    
+    environment:
+      repo_url:
+        - "https://github.com/<your-github-namespace>/base-images.git"    
+    ```
+     - If you create different branches, you can select the branch with the following syntax:
+
+    ```    
+    environment:
+      repo_url:
+        - "https://github.com/<your-github-namespace>/base-images.git@<branch-name>"    
+    ```
+- Restart Gigantum Client
 - Use your custom base!

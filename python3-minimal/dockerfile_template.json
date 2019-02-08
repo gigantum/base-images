@@ -1,0 +1,6 @@
+{
+  "template": "python3-minimal-template",
+  "args": {
+    "BASE_IMAGE": "ubuntu:18.04"
+  }
+}

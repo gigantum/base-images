@@ -1,24 +1,38 @@
-id: "python3-cuda9.0"
-name: "GPU CUDA 9.0 Ubuntu 16.04 Python3 Minimal"
-description: "An Ubuntu 16.04 base with CUDA GPU accessibility with Python 3.6 and JupyterLab only"
-readme: "An Ubuntu 16.04 base with CUDA GPU accessibility with Python 3.6 and JupyterLab only"
-revision: 1
+id: "python3-minimal-cuda-9.1"
+name: "Python3 Minimal w/ CUDA 9.1"
+description: "A minimal Base containing Python 3.6 and JupyterLab with NVIDIA GPU support via CUDA 9.1"
+readme: |
+  A minimal Base containing Python 3.6 and JupyterLab with NVIDIA GPU support via CUDA 9.1
+
+  This base built from nvidia/cuda:9.1-cudnn7-runtime-ubuntu16.04
+
+  If you run this Base on a host with NVIDIA drivers installed that support CUDA 9.1, the GPUs will
+  be available in your Project.
+
+  The following JupyterLab widgets are configured:
+
+    - @jupyterlab/toc
+    - @jupyterlab/statusbar
+    - @jupyter-widgets/jupyterlab-manager
+
+revision: 0
 schema: 1
-tags: ['ubuntu', 'cuda', 'gpu', 'machine-learning', 'python3', 'jupyterlab']
+tags: ['ubuntu', 'python3', 'jupyterlab', 'cuda', 'gpu', 'machine-learning']
 os_class: ubuntu
 os_release: "16.04"
+cuda_version: "9.1"
 license: MIT
 url: null
-cuda_version: "9.0"
 image:
   server: hub.docker.com
   namespace: gigantum
-  repository: python3-cuda9.0
-  tag: 2c82cb31b6-2018-11-20
+  repository: python3-minimal-cuda-9.1
+  tag: 17b8e50607-2019-02-08
 languages:
   - python3
 development_tools:
   - jupyterlab
+  - notebook
 package_managers:
   - pip:
   - conda3:
