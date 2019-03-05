@@ -1,8 +1,8 @@
 id: "python3-minimal-cuda-9.2"
 name: "Python3 Minimal w/ CUDA 9.2"
-description: "A minimal Base containing Python 3.6 and JupyterLab with NVIDIA GPU support via CUDA 9.2"
+description: "A minimal Base containing Python 3.7 and JupyterLab with NVIDIA GPU support via CUDA 9.2"
 readme: |
-  A minimal Base containing Python 3.6 and JupyterLab with NVIDIA GPU support via CUDA 9.2
+  A minimal Base containing Python 3.7 and JupyterLab with NVIDIA GPU support via CUDA 9.2
 
   This base built from nvidia/cuda:9.2-cudnn7-runtime-ubuntu18.04
 

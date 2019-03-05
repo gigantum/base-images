@@ -1,4 +1,4 @@
-description: A Base containing Python 3.6, JupyterLab, and common data science packages pre-installed
+description: A Base containing Python 3.7, JupyterLab, and common data science packages pre-installed
 development_tools:
 - jupyterlab
 - notebook
@@ -44,7 +44,7 @@ package_managers:
   - libxrender1
   - libxext6
   - libgl1-mesa-glx
-readme: "A Base containing Python 3.6, JupyterLab, and common Python data science\
+readme: "A Base containing Python 3.7, JupyterLab, and common Python data science\
   \ packages pre-installed. OpenBLAS is enabled.\n\nThe following JupyterLab widgets\
   \ are configured on top of python3-minimal:\n\n- jupyterlab_bokeh\n- @jupyterlab/geojson-extension\n\
   \  - @jupyterlab/plotly-extension\n"
