@@ -59,8 +59,7 @@ RUN cd /tmp && \
     conda update --quiet --yes conda && \
     conda update --all --quiet --yes && \
     # notebook 5.3 through 5.7.1 have security holes
-    # Pillow 6.0 breaks things like pytorch, so we install it pre-emptively
-    conda install --quiet --yes -c conda-forge jupyterlab=0.35 'notebook>=5.7.2,<5.8' pillow=5.4 && \
+    conda install --quiet --yes -c conda-forge jupyterlab=1.0.2 'notebook>=5.7.2,<5.8' && \
     # This is currently installed by default by conda, but it's mission
     # critical so we make it explicit
     conda install pip && \
