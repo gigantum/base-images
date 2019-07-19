@@ -59,7 +59,7 @@ RUN cd /tmp && \
     conda update --quiet --yes conda && \
     conda update --all --quiet --yes && \
     # notebook 5.3 through 5.7.1 have security holes
-    conda install --quiet --yes -c conda-forge jupyterlab=1.0.2 'notebook>=5.7.2,<5.8' && \
+    conda install --quiet --yes -c conda-forge jupyterlab=1.0.2 'notebook>=6.0,<6.1' && \
     # This is currently installed by default by conda, but it's mission
     # critical so we make it explicit
     conda install pip && \
@@ -68,10 +68,9 @@ RUN cd /tmp && \
     # improving compatability
     conda install --quiet --yes nodejs==10.15.3 && \
     pip install nbresuse && \
-    # unlcear from statusbar docs if this is necessary for jupyterlab, but doesn't hurt
+    # enable memory usage reporting in the statusbar (now installed by default)
     jupyter serverextension enable --py nbresuse && \
     jupyter labextension install @jupyterlab/toc && \
-    jupyter labextension install @jupyterlab/statusbar && \
     npm cache clean --force && \
     rm -rf $CONDA_DIR/share/jupyter/lab/staging && \
     rm -rf /root/.cache/yarn && \

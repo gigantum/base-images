@@ -3,7 +3,7 @@
 # which are Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 
-FROM gigantum/python3-minimal:ec9098c3ad-2019-05-21
+FROM gigantum/python3-minimal:87c90e7834-2019-07-19
 LABEL maintainer="Gigantum <support@gigantum.com>"
 
 
@@ -24,27 +24,27 @@ RUN apt-get update \
 RUN conda install --quiet --yes nodejs=10.15.3 && \
     conda install --quiet --yes \
         'blas=*=openblas' \
-        'bokeh=1.0' \
-        'cloudpickle=1.0' \
+        'bokeh=1.2' \
+        'cloudpickle=1.2' \
         'cython=0.29' \
         # This is a dependency of other packages - may as well list explicitly
         # Some not currently explicit, but maybe "data science" are fastcache and pyparsing
-        'dask-core=1.2' \
-        'dill=0.2' \
+        'dask-core=2.1' \
+        'dill=0.3' \
         'h5py=2.9' \
         'hdf5=1.10' \
-        'ipywidgets=7.4' \
+        'ipywidgets=7.5' \
         'matplotlib=3.1' \
         # Another dependency made explicit
         'networkx=2.3' \
-        'numba=0.43' \
+        'numba=0.44' \
         'numexpr=2.6' \
         'numpy=1.16' \
-        'pandas=0.24' \
+        'pandas=0.25' \
         'patsy=0.5' \
-        'plotly=3.9' \
+        'plotly=4.0' \
         # Another dependency made explicit
-        'pywavelets=1.0.3' \
+        'pywavelets=1.0' \
         # Another dependency made explicit
         'pyyaml=5.1' \
         'scikit-image=0.15' \
@@ -52,7 +52,7 @@ RUN conda install --quiet --yes nodejs=10.15.3 && \
         'scipy=1.3' \
         'seaborn=0.9' \
         'sqlalchemy=1.3' \
-        'statsmodels=0.9' \
+        'statsmodels=0.10' \
         'sympy=1.4' \
         'xarray=0.12' \
         'xlrd=1.2'  \
