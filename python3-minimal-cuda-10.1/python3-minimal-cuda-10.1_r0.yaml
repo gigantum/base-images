@@ -18,7 +18,7 @@ schema: 1
 tags: ['ubuntu', 'python3', 'jupyterlab', 'cuda', 'gpu', 'machine-learning']
 os_class: ubuntu
 os_release: "18.04"
-cuda_version: "10.0"
+cuda_version: "10.1"
 license: MIT
 url: null
 image:
