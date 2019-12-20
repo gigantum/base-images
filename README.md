@@ -99,19 +99,26 @@ improvements and generally useful contributions. For specific use bases, try the
 - Commit changes and push to your fork on GitHub
 - Update the configuration file for your Gigantum Client instance to point to your fork instead of this repository
     - In your Gigantum working directory (`~/gigantum`) create a config file override. To do this, write the following to
-    `~/gigantum/.labmanager/config.yaml`
+    `~/gigantum/.labmanager/config.yaml` (There is some extra information there because you currently have to specify 
+    the entire subtree for the `environment` key):
     
     ```    
     environment:
       repo_url:
         - "https://github.com/<your-github-namespace>/base-images.git"    
+      iframe:
+        enabled: false
+        allowed_origin: localhost:10000
     ```
-     - If you create different branches, you can select the branch with the following syntax:
+    - If you create different branches, you can select the branch with the following syntax:
 
     ```    
     environment:
       repo_url:
         - "https://github.com/<your-github-namespace>/base-images.git@<branch-name>"    
+      iframe:
+        enabled: false
+        allowed_origin: localhost:10000
     ```
 - Restart Gigantum Client
 - Use your custom base!
