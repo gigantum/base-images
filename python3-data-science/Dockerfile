@@ -21,43 +21,38 @@ RUN apt-get update \
 
 # nodejs is for jupyter lab extensions below
 # It's pinned to match python3-minimal, to avoid the need to rebuild extensions
-RUN conda install --quiet --yes nodejs=12.13.0 && \
+RUN conda install --quiet --yes nodejs=12.16.1 && \
     conda install --quiet --yes \
         'blas=*=openblas' \
-        'bokeh=1.4' \
-        'cloudpickle=1.2' \
+        'bokeh=2.0' \
+        'cloudpickle=1.3' \
         'cython=0.29' \
-        # This is a dependency of other packages - may as well list explicitly
-        # Some not currently explicit, but maybe "data science" are fastcache and pyparsing
-        'dask-core=2.9' \
+        'dask-core=2.14' \
         'dill=0.3' \
         'h5py=2.10' \
         'hdf5=1.10' \
         'ipywidgets=7.5' \
-        'matplotlib=3.1' \
-        # Another dependency made explicit
+        'matplotlib=3.2' \
         'networkx=2.4' \
-        'numba=0.46' \
+        'numba=0.48' \
         'numexpr=2.7' \
-        'numpy=1.17' \
-        'pandas=0.25' \
+        'numpy=1.18' \
+        'pandas=1.0' \
         'patsy=0.5' \
-        'pillow=6.2' \
-        'psutil=5.6' \
-        # Another dependency made explicit
+        'pillow=7.1' \
+        'psutil=5.7' \
         'pywavelets=1.1' \
-        # Another dependency made explicit
-        'pyyaml=5.2' \
+        'pyyaml=5.3' \
         'scikit-image=0.16' \
         'scikit-learn=0.22' \
-        'scipy=1.3' \
-        'seaborn=0.9' \
+        'scipy=1.4' \
+        'seaborn=0.10' \
         'sqlalchemy=1.3' \
-        'statsmodels=0.10' \
+        'statsmodels=0.11' \
         'sympy=1.5' \
-        'xarray=0.14' \
+        'xarray=0.15' \
         'xlrd=1.2'  \
-    && conda install --quiet --yes -c plotly 'plotly=4.4' 'plotly-orca=1.2' \
+    && conda install --quiet --yes -c plotly 'plotly=4.6' 'plotly-orca=1.3' \
     # Note - we used to remove pyqt and qt since we are mostly browser-based, but the conda solver pulls it in as part
     # of any subsequent installation, so it's better to just leave it installed to save space and time
     && conda clean --all

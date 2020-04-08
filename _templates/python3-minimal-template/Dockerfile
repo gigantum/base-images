@@ -1,5 +1,3 @@
-# Copyright (c) Gigantum
-
 # Note, some docker commands taken from/inspired by the standard docker-stacks maintained
 # by the Jupyter team: https://github.com/jupyter/docker-stacks/
 # Copyright (c) Jupyter Development Team.
@@ -36,8 +34,8 @@ ENV CONDA_DIR=/opt/conda \
     GIGANTUM_SHARE=/mnt/share \
     GIGANTUM_WORKDIR=/mnt/labbook \
     SHELL=/bin/bash \
-    MINICONDA_VERSION=4.7.12.1 \
-    MINICONDA_MD5=81c773ff87af5cfac79ab862942ab6b3 \
+    MINICONDA_VERSION=py37_4.8.2 \
+    MINICONDA_MD5=87e77f097f6ebb5127c77662dfc3165e \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8
 ENV PATH=$CONDA_DIR/bin:$PATH \
@@ -60,19 +58,18 @@ RUN cd /tmp && \
     # We update conda explicitly to get any gains in performance, etc.
     conda update --quiet --yes conda && \
     conda update --all --quiet --yes && \
-    # notebook 5.3 through 5.7.1 have security holes
-    conda install --quiet --yes -c conda-forge jupyterlab=1.2.4 'notebook>=6.0,<6.1' && \
+    conda install --quiet --yes -c conda-forge jupyterlab=2.1 'notebook>=6.0,<6.1' nbresuse && \
     # This is currently installed by default by conda, but it's mission
     # critical so we make it explicit
     conda install pip && \
     # We pin the version of nodejs so we can be sure to re-install the same
     # version later - avoiding jupyterlab extension rebuilds and generally
     # improving compatability
-    conda install --quiet --yes nodejs==12.13.0 && \
-    pip install nbresuse && \
+    conda install --quiet --yes nodejs==12.16.1 && \
     # enable memory usage reporting in the statusbar (now installed by default)
-    jupyter serverextension enable --py nbresuse && \
-    jupyter labextension install @jupyterlab/toc && \
+    jupyter labextension install jupyterlab-topbar-extension \
+                                 jupyterlab-system-monitor \
+                                 @jupyterlab/toc && \
     npm cache clean --force && \
     rm -rf $CONDA_DIR/share/jupyter/lab/staging && \
     rm -rf /root/.cache/yarn && \
