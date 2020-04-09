@@ -80,5 +80,5 @@ RUN export NODE_OPTIONS=--max-old-space-size=4096 && \
 ENV NUMBA_CACHE_DIR /tmp
 
 # Import matplotlib the first time to build the font cache.
-ENV XDG_CACHE_HOME /opt/matplotlib/.cache/
+ENV XDG_CACHE_HOME /var/local/cache/
 RUN MPLBACKEND=Agg python -c "import matplotlib.pyplot"

@@ -66,10 +66,7 @@ RUN cd /tmp && \
     # version later - avoiding jupyterlab extension rebuilds and generally
     # improving compatability
     conda install --quiet --yes nodejs==12.16.1 && \
-    # enable memory usage reporting in the statusbar (now installed by default)
-    jupyter labextension install jupyterlab-topbar-extension \
-                                 jupyterlab-system-monitor \
-                                 @jupyterlab/toc && \
+    jupyter labextension install @jupyterlab/toc && \
     npm cache clean --force && \
     rm -rf $CONDA_DIR/share/jupyter/lab/staging && \
     rm -rf /root/.cache/yarn && \
