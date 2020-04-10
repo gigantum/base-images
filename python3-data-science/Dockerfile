@@ -3,7 +3,7 @@
 # which are Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 
-FROM gigantum/python3-minimal:87c90e7834-2019-07-19
+FROM gigantum/python3-minimal:852f9e65d9-2020-04-09
 LABEL maintainer="Gigantum <support@gigantum.com>"
 
 
@@ -24,7 +24,6 @@ RUN apt-get update \
 RUN conda install --quiet --yes nodejs=12.16.1 && \
     conda install --quiet --yes \
         'blas=*=openblas' \
-        'bokeh=2.0' \
         'cloudpickle=1.3' \
         'cython=0.29' \
         'dask-core=2.14' \
@@ -52,33 +51,36 @@ RUN conda install --quiet --yes nodejs=12.16.1 && \
         'sympy=1.5' \
         'xarray=0.15' \
         'xlrd=1.2'  \
-    && conda install --quiet --yes -c plotly 'plotly=4.6' 'plotly-orca=1.3' \
+    && conda install --quiet --yes -c plotly -c bokeh plotly=4.6 plotly-orca=1.3 bokeh=2.0 jupyter_bokeh \
     # Note - we used to remove pyqt and qt since we are mostly browser-based, but the conda solver pulls it in as part
     # of any subsequent installation, so it's better to just leave it installed to save space and time
     && conda clean --all
 
 # Set up additional widgets
-RUN export NODE_OPTIONS=--max-old-space-size=4096 && \
-    jupyter labextension install jupyterlab_bokeh --no-build && \
-    jupyter labextension install @jupyterlab/geojson-extension --no-build && \
-    # Activate ipywidgets extensions for JupyterLab
-    jupyter labextension install @jupyter-widgets/jupyterlab-manager@1.1 --no-build && \
-    jupyter labextension install plotlywidget@1.4.0 --no-build && \
-    jupyter labextension install jupyterlab-plotly@1.4.0 --no-build && \
-    # Build all of the above
-    jupyter lab build && \
+RUN export NODE_OPTIONS=--max-old-space-size=4096 \
+    # jupyter labextension install jupyterlab_bokeh --no-build && \
+    # jupyter labextension install @jupyterlab/geojson-extension --no-build && \
+    # # Activate ipywidgets extensions for JupyterLab
+    # jupyter labextension install @jupyter-widgets/jupyterlab-manager@1.1 --no-build && \
+    # jupyter labextension install plotlywidget@1.4.0 --no-build && \
+    # jupyter labextension install jupyterlab-plotly@1.4.0 --no-build && \
+    # # Build all of the above
+    # jupyter lab build && \
+    && jupyter labextension install @jupyterlab/geojson-extension \
+                                    @jupyter-widgets/jupyterlab-manager@2.0 \
+                                    plotlywidget@4.6.0 \
+                                    jupyterlab-plotly@4.6.0 \
     # unset just in case
-    unset NODE_OPTIONS && \
-    # Activate ipywidgets for notebook server just in case
-    jupyter nbextension enable --py widgetsnbextension --sys-prefix && \
-    npm cache clean --force && \
-    rm -rf $CONDA_DIR/share/jupyter/lab/staging && \
-    rm -rf /root/.cache/yarn && \
+    && unset NODE_OPTIONS \
+    && npm cache clean --force \
+    && rm -rf $CONDA_DIR/share/jupyter/lab/staging \
+    && rm -rf /root/.cache/yarn \
     rm -rf /root/.node-gyp
 
 # Give numba a location for JIT compiled files
-ENV NUMBA_CACHE_DIR /tmp
+# ENV NUMBA_CACHE_DIR /tmp
 
+# Since the giguser home dir doesn't exist yet, we choose another location for XDG cache
+ENV XDG_CACHE_HOME /var/local/gigacache/
 # Import matplotlib the first time to build the font cache.
-ENV XDG_CACHE_HOME /var/local/cache/
 RUN MPLBACKEND=Agg python -c "import matplotlib.pyplot"

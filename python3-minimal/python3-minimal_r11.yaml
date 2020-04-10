@@ -24,7 +24,7 @@ readme: |
 
   The following JupyterLab widgets are configured:
     - @jupyterlab/toc
-    - nbresuse with jupyterlab-system-monitor to display system usage stats in the status bar
+    - nbresuse to display memory usage in the status bar
 schema: 1
 tags:
 - ubuntu
