@@ -107,7 +107,7 @@ RUN cd /tmp && \
     # We update conda explicitly to get any gains in performance, etc.
     conda update --quiet --yes conda && \
     conda update --all --quiet --yes && \
-    conda install --quiet --yes -c conda-forge jupyterlab=2.1 'notebook>=6.0,<6.1' nbresuse && \
+    conda install --quiet --yes -c conda-forge jupyterlab=2.1 'notebook>=6.0,<6.1' && \
     # This is currently installed by default by conda, but it's mission
     # critical so we make it explicit
     conda install pip && \
@@ -115,6 +115,7 @@ RUN cd /tmp && \
     # version later - avoiding jupyterlab extension rebuilds and generally
     # improving compatability
     conda install --quiet --yes nodejs==12.16.1 && \
+    pip install nbresuse && \
     jupyter labextension install @jupyterlab/toc && \
     npm cache clean --force && \
     rm -rf $CONDA_DIR/share/jupyter/lab/staging && \
