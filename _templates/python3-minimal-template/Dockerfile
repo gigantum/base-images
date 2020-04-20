@@ -115,7 +115,10 @@ RUN cd /tmp && \
     # version later - avoiding jupyterlab extension rebuilds and generally
     # improving compatability
     conda install --quiet --yes nodejs==12.16.1 && \
-    pip install nbresuse && \
+    # enable memory usage reporting in the statusbar (now installed by default)
+    pip install nbresuse[resources] && \
+    # XXX DJWC - Yuvi says you don't need to do this anymore - will delete after verifying
+    # jupyter serverextension enable --py nbresuse && \
     jupyter labextension install @jupyterlab/toc && \
     npm cache clean --force && \
     rm -rf $CONDA_DIR/share/jupyter/lab/staging && \
