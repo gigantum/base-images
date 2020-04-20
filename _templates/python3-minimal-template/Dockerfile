@@ -57,7 +57,7 @@ RUN mkdir /tmp/lfs_install && cd /tmp/lfs_install && \
     tar -xf git-lfs.tar.gz git-lfs && \
     cp ./git-lfs /usr/local/bin/git-lfs && \
     chmod 755 /usr/local/bin/git-lfs && \
-    git lfs install && \
+    # We'll need to run `git-lfs install` for the user at Project launch
     cd ~ && \
     rm -rf /tmp/lfs_install
 
@@ -70,8 +70,11 @@ ENV CONDA_DIR=/opt/conda \
     MINICONDA_MD5=87e77f097f6ebb5127c77662dfc3165e \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8
+# Now we can use the variables defined above
 ENV PATH=$CONDA_DIR/bin:$PATH \
-    JUPYTER_RUNTIME_DIR=$GIGANTUM_SHARE/jupyter/runtime
+    JUPYTER_RUNTIME_DIR=$GIGANTUM_SHARE/jupyter/runtime \
+    # We use our share volume - shared between all projects on a given machine
+    XDG_CACHE_HOME=$GIGANTUM_SHARE/cache
 
 # Install conda, python, and jupyter
 RUN cd /tmp && \
@@ -90,7 +93,8 @@ RUN cd /tmp && \
     # We update conda explicitly to get any gains in performance, etc.
     conda update --quiet --yes conda && \
     conda update --all --quiet --yes && \
-    conda install --quiet --yes -c conda-forge jupyterlab=2.0.2 'notebook>=6.0,<6.1' && \
+    # Now installing nbresuse via conda - it's not working via pip for some reason
+    conda install --quiet --yes -c conda-forge jupyterlab=2.0.2 'notebook>=6.0,<6.1' nbresuse && \
     # This is currently installed by default by conda, but it's mission
     # critical so we make it explicit
     conda install pip && \
@@ -98,10 +102,6 @@ RUN cd /tmp && \
     # version later - avoiding jupyterlab extension rebuilds and generally
     # improving compatability
     conda install --quiet --yes nodejs==12.16.1 && \
-    # enable memory usage reporting in the statusbar (now installed by default)
-    pip install nbresuse[resources] && \
-    # XXX DJWC - Yuvi says you don't need to do this anymore - will delete after verifying
-    # jupyter serverextension enable --py nbresuse && \
     jupyter labextension install @jupyterlab/toc && \
     npm cache clean --force && \
     rm -rf $CONDA_DIR/share/jupyter/lab/staging && \
