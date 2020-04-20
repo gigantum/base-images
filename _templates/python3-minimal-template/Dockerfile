@@ -107,7 +107,7 @@ RUN cd /tmp && \
     # We update conda explicitly to get any gains in performance, etc.
     conda update --quiet --yes conda && \
     conda update --all --quiet --yes && \
-    conda install --quiet --yes -c conda-forge jupyterlab=2.1 'notebook>=6.0,<6.1' && \
+    conda install --quiet --yes -c conda-forge jupyterlab=2.0.2 'notebook>=6.0,<6.1' && \
     # This is currently installed by default by conda, but it's mission
     # critical so we make it explicit
     conda install pip && \
