@@ -73,8 +73,8 @@ ENV CONDA_DIR=/opt/conda \
 # Now we can use the variables defined above
 ENV PATH=$CONDA_DIR/bin:$PATH \
     JUPYTER_RUNTIME_DIR=$GIGANTUM_SHARE/jupyter/runtime \
-    # We use our share volume - shared between all projects on a given machine
-    XDG_CACHE_HOME=$GIGANTUM_SHARE/cache
+    # We use the future location of the mounted project - we need to ensure we delete this directory below
+    XDG_CACHE_HOME=$GIGANTUM_WORKDIR/code/untracked/.cache
 
 # Install conda, python, and jupyter
 RUN cd /tmp && \
@@ -105,7 +105,8 @@ RUN cd /tmp && \
     jupyter labextension install @jupyterlab/toc && \
     npm cache clean --force && \
     rm -rf $CONDA_DIR/share/jupyter/lab/staging && \
-    rm -rf /root/.cache/yarn && \
+    # XDG_CACHE_DIR is currently located in the mounted project / workdir, so we delete the whole thing
+    rm -rf $GIGANTUM_WORKDIR && \
     rm -rf /root/.node-gyp && \
     conda remove --quiet --yes nodejs && \
     conda clean --all

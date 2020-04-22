@@ -3,9 +3,8 @@
 # which are Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 
-FROM gigantum/python3-minimal:852f9e65d9-2020-04-09
+FROM gigantum/python3-minimal:302d92abfd-2020-04-21
 LABEL maintainer="Gigantum <support@gigantum.com>"
-
 
 RUN apt-get update \
     && apt-get install -yq --no-install-recommends \
@@ -74,13 +73,14 @@ RUN export NODE_OPTIONS=--max-old-space-size=4096 \
     && unset NODE_OPTIONS \
     && npm cache clean --force \
     && rm -rf $CONDA_DIR/share/jupyter/lab/staging \
-    && rm -rf /root/.cache/yarn \
+    # We remove the GIGANTUM_WORKDIR because that's where we currently have our XDG_CACHE_DIR
+    && rm -rf $GIGANTUM_WORKDIR \
     rm -rf /root/.node-gyp
 
 # Give numba a location for JIT compiled files
 # ENV NUMBA_CACHE_DIR /tmp
 
 # Since the giguser home dir doesn't exist yet, we choose another location for XDG cache
-ENV XDG_CACHE_HOME /var/local/gigacache/
-# Import matplotlib the first time to build the font cache.
-RUN MPLBACKEND=Agg python -c "import matplotlib.pyplot"
+# ENV XDG_CACHE_HOME /var/local/gigacache/
+# Import matplotlib the first time to build the font cache - should end up inside of $XDG_CACHE_HOME.
+# RUN MPLBACKEND=Agg python -c "import matplotlib.pyplot"

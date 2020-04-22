@@ -8,7 +8,7 @@ image:
   namespace: gigantum
   repository: python3-minimal
   server: hub.docker.com
-  tag: 67441b4106-2020-04-20
+  tag: 302d92abfd-2020-04-21
 languages:
 - python3
 license: MIT
