@@ -1,6 +1,0 @@
-{
-  "template": "python3-minimal-template",
-  "args": {
-    "BASE_IMAGE": "nvidia/cuda:9.0-cudnn7-runtime-ubuntu16.04"
-  }
-}
