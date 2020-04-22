@@ -5,7 +5,7 @@ readme: |
   A minimal Base containing Python 3.7 and JupyterLab with NVIDIA GPU support
   via CUDA 10.1
 
-  This base built from nvidia/cuda:10.0-cudnn7-runtime-ubuntu18.04
+  This base built from nvidia/cuda:10.1-cudnn7-runtime-ubuntu18.04
 
   If you run this Base on a host with NVIDIA drivers installed that support
   CUDA 10.1, the GPU(s) will be available in your Project.
