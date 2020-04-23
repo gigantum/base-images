@@ -1,6 +1,6 @@
 cuda_version: '10.2'
 description: A minimal Base containing Python 3.7 and JupyterLab with NVIDIA GPU support
-  via CUDA 10.2
+  via CUDA 10.2 
 development_tools:
 - jupyterlab
 - notebook
@@ -22,6 +22,8 @@ package_managers:
 - conda3: null
 - apt: null
 readme: |
+  **NOTE! Requires Gigantum Client >= 1.3.1 to enable GPU!**
+
   A minimal Base containing Python 3.7 and JupyterLab with NVIDIA GPU support
   via CUDA 10.2
 
