@@ -94,14 +94,18 @@ RUN cd /tmp && \
     conda update --quiet --yes conda && \
     conda update --all --quiet --yes && \
     # Now installing nbresuse via conda - it's not working via pip for some reason
-    conda install --quiet --yes -c conda-forge jupyterlab=2.0.2 'notebook>=6.0,<6.1' nbresuse && \
-    # This is currently installed by default by conda, but it's mission
-    # critical so we make it explicit
-    conda install pip && \
-    # We pin the version of nodejs so we can be sure to re-install the same
-    # version later - avoiding jupyterlab extension rebuilds and generally
-    # improving compatability
-    conda install --quiet --yes nodejs==12.16.1 && \
+    conda install --quiet --yes -c conda-forge 
+      jupyterlab=2.0.2 \
+      'notebook>=6.0,<6.1' \
+      numpydoc=0.9 \
+      nbresuse \
+      # Pip is installed by default by conda, but it's mission
+      # critical so we make it explicit
+      pip \
+      # We pin the version of nodejs so we can be sure to re-install the same
+      # version later - avoiding jupyterlab extension rebuilds and generally
+      # improving compatability
+      nodejs==12.16.1 && \
     jupyter labextension install @jupyterlab/toc && \
     npm cache clean --force && \
     rm -rf $CONDA_DIR/share/jupyter/lab/staging && \
