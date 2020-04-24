@@ -8,7 +8,7 @@ image:
   namespace: gigantum
   repository: python3-data-science
   server: hub.docker.com
-  tag: bbad8aba68-2020-04-22
+  tag: ac8dce36e8-2020-04-23
 languages:
 - python3
 license: MIT

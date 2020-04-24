@@ -95,8 +95,8 @@ RUN cd /tmp && \
     conda update --all --quiet --yes && \
     # Now installing nbresuse via conda - it's not working via pip for some reason
     conda install --quiet --yes -c conda-forge \
-      jupyterlab=2.0.2 \
-      'notebook>=6.0,<6.1' \
+      jupyterlab=2.0 \
+      notebook=6.0 \
       numpydoc=0.9 \
       nbresuse \
       # Pip is installed by default by conda, but it's mission

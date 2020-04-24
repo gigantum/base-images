@@ -1,9 +1,6 @@
 # Copyright (c) Gigantum
 
-# The below is a relatively straightforward adaptation of directions at
-# https://cran.r-project.org/bin/linux/ubuntu/README.html
-
-FROM gigantum/r-tidyverse:f086714bd9-2019-12-18
+FROM gigantum/r-tidyverse:ac8dce36e8-2020-04-24
 LABEL maintainer="Gigantum <support@gigantum.com>"
 
 # Install system level dependencies
@@ -14,13 +11,13 @@ RUN apt-get update \
         r-cran-bitops \
     && apt-get clean
 
-# downloading the GPG key for RStudio is problematic, so we use the md5 hash
-# There are numerous potential issues with gpg, including firewalls that block
-# all but web ports, and broken ipv6
+# downloading GPG keys is problematic, so we use the sha256 hash
+# There are numerous potential issues with gpg in Docker, including firewalls
+# that block all but web ports, and broken ipv6
 
 # Using variables mostly to make it obvious what needs to be updated in future
-ENV RSTUDIO_SHA256=62b1fb2f6f48342518d75b6efb6e721b5a49991d1642e3b879e4c5ed03cee875 \
-    RSTUDIO_VER=1.2.5033
+ENV RSTUDIO_SHA256=ed4f765d85165c78967892f65c1b167059d9fd4977e273126e946e45db0372f8 \
+    RSTUDIO_VER=1.2.5042
 
 RUN wget https://download2.rstudio.org/server/bionic/amd64/rstudio-server-${RSTUDIO_VER}-amd64.deb \
     && echo $RSTUDIO_SHA256 rstudio-server-${RSTUDIO_VER}-amd64.deb | sha256sum -c \

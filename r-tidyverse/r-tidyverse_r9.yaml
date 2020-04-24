@@ -3,12 +3,12 @@ development_tools:
 - jupyterlab
 - notebook
 id: r-tidyverse
-revision: 8
+revision: 9
 image:
   namespace: gigantum
   repository: r-tidyverse
   server: hub.docker.com
-  tag: 1616a0f87a-2020-04-22
+  tag: ac8dce36e8-2020-04-24
 languages:
 - R
 - python3

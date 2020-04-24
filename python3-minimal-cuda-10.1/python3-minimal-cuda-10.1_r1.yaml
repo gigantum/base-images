@@ -5,11 +5,12 @@ development_tools:
 - jupyterlab
 - notebook
 id: python3-minimal-cuda-10.1
+revision: 1
 image:
   namespace: gigantum
   repository: python3-minimal-cuda-10.1
   server: hub.docker.com
-  tag: f086714bd9-2019-12-18
+  tag: 66efb89965-2020-04-24
 languages:
 - python3
 license: MIT
@@ -32,7 +33,6 @@ readme: |
   The following JupyterLab widgets are configured:
     - @jupyterlab/toc
     - nbresuse to enable memory usage in the status bar
-revision: 1
 schema: 1
 tags:
 - ubuntu
