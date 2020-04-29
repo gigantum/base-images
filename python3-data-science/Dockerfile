@@ -23,9 +23,10 @@ RUN apt-get update \
 RUN conda install --quiet --yes nodejs=12.16.1 \
     && conda install --quiet --yes \
         'blas=*=openblas' \
-        cloudpickle=1.3 \
+        bokeh=2.0 \
+        cloudpickle=1.4 \
         cython=0.29 \
-        dask-core=2.14 \
+        dask-core=2.15 \
         dill=0.3 \
         h5py=2.10 \
         hdf5=1.10 \
@@ -39,6 +40,8 @@ RUN conda install --quiet --yes nodejs=12.16.1 \
         pandas=1.0 \
         patsy=0.5 \
         pillow=7.1 \
+        plotly=4.6 \
+        plotly-orca=3.3 \
         psutil=5.7 \
         pywavelets=1.1 \
         pyyaml=5.3 \
@@ -51,7 +54,6 @@ RUN conda install --quiet --yes nodejs=12.16.1 \
         sympy=1.5 \
         xarray=0.15 \
         xlrd=1.2  \
-    && conda install --quiet --yes -c plotly -c bokeh plotly=4.6 plotly-orca=1.3 bokeh=2.0 jupyter_bokeh \
     # Note - we used to remove pyqt and qt since we are mostly browser-based, but the conda solver pulls it in as part
     # of any subsequent installation, so it's better to just leave it installed to save space and time
     && conda clean --all
@@ -61,6 +63,7 @@ RUN export NODE_OPTIONS=--max-old-space-size=4096 \
     && jupyter labextension install @jupyterlab/geojson-extension \
                                     @jupyter-widgets/jupyterlab-manager@2.0 \
                                     jupyter-matplotlib \
+                                    @bokeh/jupyter_bokeh \
                                     plotlywidget@4.6.0 \
                                     jupyterlab-plotly@4.6.0 \
     # unset just in case
