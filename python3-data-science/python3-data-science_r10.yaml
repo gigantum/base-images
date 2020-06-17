@@ -37,7 +37,7 @@ package_managers:
   - plotly=4.4*
   - plotly-orca=1.2*
   - pywavelets=1.1*
-  - pyyaml=5.1*
+  - pyyaml=5.2*
   - scikit-image=0.16*
   - scikit-learn=0.22*
   - scipy=1.3*
