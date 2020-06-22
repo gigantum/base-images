@@ -66,8 +66,9 @@ ENV CONDA_DIR=/opt/conda \
     GIGANTUM_SHARE=/mnt/share \
     GIGANTUM_WORKDIR=/mnt/labbook \
     SHELL=/bin/bash \
-    MINICONDA_VERSION=py37_4.8.2 \
-    MINICONDA_MD5=87e77f097f6ebb5127c77662dfc3165e \
+    MINICONDA_VERSION=py37_4.8.3 \
+    MINICONDA_MD5=751786b92c00b1aeae3f017b781018df \
+    GIGANTUM_NODE_VERSION=12.16.1
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8
 # Now we can use the variables defined above
@@ -91,11 +92,12 @@ RUN cd /tmp && \
     conda config --system --set auto_update_conda false && \
     conda config --system --set show_channel_urls true && \
     # We update conda explicitly to get any gains in performance, etc.
+    # Be sure to check the version of requests installed by conda and update the yaml files!
     conda update --quiet --yes conda && \
     conda update --all --quiet --yes && \
     # Now installing nbresuse via conda - it's not working via pip for some reason
     conda install --quiet --yes -c conda-forge \
-      jupyterlab=2.0 \
+      jupyterlab=2.1 \
       notebook=6.0 \
       numpydoc=0.9 \
       nbresuse \
@@ -105,7 +107,7 @@ RUN cd /tmp && \
       # We pin the version of nodejs so we can be sure to re-install the same
       # version later - avoiding jupyterlab extension rebuilds and generally
       # improving compatability
-      nodejs==12.16.1 && \
+      nodejs==$GIGANTUM_NODE_VERSION && \
     jupyter labextension install @jupyterlab/toc && \
     npm cache clean --force && \
     rm -rf $CONDA_DIR/share/jupyter/lab/staging && \

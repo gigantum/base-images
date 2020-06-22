@@ -19,7 +19,8 @@ os_class: ubuntu
 os_release: '18.04'
 package_managers:
 - pip: null
-- conda3: null
+- conda3:
+  - requests=2.24*
 - apt: null
 readme: |
   A minimal Base containing Python 3.7 and JupyterLab with NVIDIA GPU support
