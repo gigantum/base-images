@@ -68,7 +68,7 @@ ENV CONDA_DIR=/opt/conda \
     SHELL=/bin/bash \
     MINICONDA_VERSION=py37_4.8.3 \
     MINICONDA_MD5=751786b92c00b1aeae3f017b781018df \
-    GIGANTUM_NODE_VERSION=12.16.1
+    GIGANTUM_NODE_VERSION=12.16.1 \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8
 # Now we can use the variables defined above
