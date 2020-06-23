@@ -47,7 +47,8 @@ RUN mkdir /tmp/gitbuild && cd /tmp/gitbuild && \
     NO_PERL=1 NO_TCLTK=1 NO_GETTEXT=1 ./configure --prefix=/usr/local --with-openssl && \
     make -j2 && \
     make install && \
-    cd ~ && \
+    cd /usr/local/libexec/git-core && \
+    find . -samefile git -name 'git-*' -exec ln -sf git {} \; && \
     rm -rf /tmp/gitbuild
 
 # Get the latest git LFS binary
@@ -99,7 +100,7 @@ RUN cd /tmp && \
     conda install --quiet --yes -c conda-forge \
       jupyterlab=2.1 \
       notebook=6.0 \
-      numpydoc=0.9 \
+      numpydoc=1.0 \
       nbresuse \
       # Pip is installed by default by conda, but it's mission
       # critical so we make it explicit
