@@ -47,8 +47,7 @@ RUN mkdir /tmp/gitbuild && cd /tmp/gitbuild && \
     NO_PERL=1 NO_TCLTK=1 NO_GETTEXT=1 ./configure --prefix=/usr/local --with-openssl && \
     make -j2 && \
     make install && \
-    cd /usr/local/libexec/git-core && \
-    find . -samefile git -name 'git-*' -exec ln -sf git {} \; && \
+    cd ~ && \
     rm -rf /tmp/gitbuild
 
 # Get the latest git LFS binary
