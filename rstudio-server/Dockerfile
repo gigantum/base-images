@@ -1,7 +1,21 @@
 # Copyright (c) Gigantum
 
-FROM gigantum/r-tidyverse:ac8dce36e8-2020-04-24
+FROM gigantum/r-tidyverse:b89c4808d6-2020-06-23
 LABEL maintainer="Gigantum <support@gigantum.com>"
+
+# downloading GPG keys is problematic, so we use the sha256 hash
+# There are numerous potential issues with gpg in Docker, including firewalls
+# that block all but web ports, and broken ipv6
+
+# Using variables mostly to make it obvious what needs to be updated in future
+ENV RSTUDIO_SHA256=187af05cab1221282487fdc33f4b161484c3228eaade3d6697b1d41c206ee6d9 \
+    RSTUDIO_VER=1.3.959
+
+RUN wget https://download2.rstudio.org/server/bionic/amd64/rstudio-server-${RSTUDIO_VER}-amd64.deb \
+    && echo $RSTUDIO_SHA256 rstudio-server-${RSTUDIO_VER}-amd64.deb | sha256sum -c \
+    && apt-get install -yq ./rstudio-server-*-amd64.deb \
+    && apt-get clean \
+    && rm rstudio-server-*-amd64.deb
 
 # Install system level dependencies
 RUN apt-get update \
@@ -10,20 +24,6 @@ RUN apt-get update \
         r-cran-catools \
         r-cran-bitops \
     && apt-get clean
-
-# downloading GPG keys is problematic, so we use the sha256 hash
-# There are numerous potential issues with gpg in Docker, including firewalls
-# that block all but web ports, and broken ipv6
-
-# Using variables mostly to make it obvious what needs to be updated in future
-ENV RSTUDIO_SHA256=ed4f765d85165c78967892f65c1b167059d9fd4977e273126e946e45db0372f8 \
-    RSTUDIO_VER=1.2.5042
-
-RUN wget https://download2.rstudio.org/server/bionic/amd64/rstudio-server-${RSTUDIO_VER}-amd64.deb \
-    && echo $RSTUDIO_SHA256 rstudio-server-${RSTUDIO_VER}-amd64.deb | sha256sum -c \
-    && apt-get install -yq --no-install-recommends ./rstudio-server-*-amd64.deb \
-    && apt-get clean \
-    && rm rstudio-server-*-amd64.deb
 
 # Expose port for RStudio
 EXPOSE 8787

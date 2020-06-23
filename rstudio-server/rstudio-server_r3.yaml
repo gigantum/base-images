@@ -9,7 +9,7 @@ image:
   namespace: gigantum
   repository: rstudio-server
   server: hub.docker.com
-  tag: 154e3dab36-2020-04-24
+  tag: 9ada93a319-2020-06-23
 languages:
 - R
 - python3
