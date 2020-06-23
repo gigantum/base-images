@@ -23,10 +23,10 @@ RUN apt-get update \
 RUN conda install --quiet --yes nodejs=12.16.1 \
     && conda install --quiet --yes \
         'blas=*=openblas' \
-        bokeh=2.0 \
+        bokeh=2.1 \
         cloudpickle=1.4 \
         cython=0.29 \
-        dask-core=2.15 \
+        dask-core=2.19 \
         dill=0.3 \
         h5py=2.10 \
         hdf5=1.10 \
@@ -40,18 +40,18 @@ RUN conda install --quiet --yes nodejs=12.16.1 \
         pandas=1.0 \
         patsy=0.5 \
         pillow=7.1 \
-        plotly=4.6 \
-        plotly-orca=3.3 \
+        plotly=4.8 \
+        plotly-orca=3.4 \
         psutil=5.7 \
         pywavelets=1.1 \
         pyyaml=5.3 \
-        scikit-image=0.16 \
-        scikit-learn=0.22 \
+        scikit-image=0.17 \
+        scikit-learn=0.23 \
         scipy=1.4 \
         seaborn=0.10 \
         sqlalchemy=1.3 \
         statsmodels=0.11 \
-        sympy=1.5 \
+        sympy=1.6 \
         xarray=0.15 \
         xlrd=1.2  \
     # Note - we used to remove pyqt and qt since we are mostly browser-based, but the conda solver pulls it in as part
