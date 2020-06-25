@@ -83,7 +83,8 @@ ENV PATH=$CONDA_DIR/bin:$PATH \
 
 # Install conda, python, and jupyter
 RUN cd /tmp && \
-    curl --silent --show-error --output Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh https://repo.continuum.io/miniconda/Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh && \
+    curl --silent --show-error --location --output Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh \
+        https://repo.continuum.io/miniconda/Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh && \
     echo "$MINICONDA_MD5 *Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh" | md5sum -c - && \
     /bin/bash Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
     rm Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh && \
