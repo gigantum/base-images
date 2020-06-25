@@ -13,8 +13,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 # Install system level dependencies
 RUN apt-get update \
-    && apt-get install -yq --no-install-recommends \
-        wget \
+    && apt-get install -yqq --no-install-recommends \
         curl \
         bzip2 \
         ca-certificates \
@@ -25,35 +24,40 @@ RUN apt-get update \
         fonts-liberation \
         gosu \
         tzdata \
-        # Enable `make install` for git w/ openssl
-        dh-autoreconf \
-        openssl \
-        libz-dev \
-        libexpat1-dev \
-        libcurl4-openssl-dev \
     && apt-get clean
 
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && locale-gen
 
 # Build Git from source with OpenSSL
-RUN mkdir /tmp/gitbuild && cd /tmp/gitbuild && \
+RUN apt-get update \
+    # These packages enable `make install` for git w/ openssl
+    && apt-get install -yqq \
+        dh-autoreconf \
+        openssl \
+        libz-dev \
+        libexpat1-dev \
+        libcurl4-openssl-dev \
+    && mkdir /tmp/gitbuild && cd /tmp/gitbuild \
     # Get the latest git tarball
-    git_tarball_url="https://www.github.com$(curl 'https://github.com/git/git/tags' | grep -o "/git/git/archive/v2\..*\.tar\.gz" | sort -r | head -1 | tr -d '\n')" && \
-    curl -L --retry 5 "${git_tarball_url}" --output git-source.tar.gz && \
-    tar -xf git-source.tar.gz --strip 1 && \
-    rm git-source.tar.gz && \
-    make configure && \
+    && git_tarball_url=https://www.github.com$(curl 'https://github.com/git/git/tags' | grep -o "/git/git/archive/v2\..*\.tar\.gz" | sort -r | head -1 | tr -d '\n') \
+    && curl -L --retry 5 $git_tarball_url --output git-source.tar.gz \
+    && tar -xf git-source.tar.gz --strip 1 \
+    && rm git-source.tar.gz \
+    && make configure \
     # Configure the custom git build to use openSSL for better enterprise network support.
-    NO_PERL=1 NO_TCLTK=1 NO_GETTEXT=1 ./configure --prefix=/usr/local --with-openssl && \
-    make -j2 && \
-    make install && \
-    cd ~ && \
-    rm -rf /tmp/gitbuild
+    && NO_PERL=1 NO_TCLTK=1 NO_GETTEXT=1 ./configure --prefix=/usr/local --with-openssl \
+    && make -j2 \
+    && make install \
+    && cd ~ \
+    && rm -rf /tmp/gitbuild \
+    && apt-get -qq -y remove dh-autoreconf \
+    && apt-get -qq -y autoremove \
+    && apt-get clean
 
 # Get the latest git LFS binary
 RUN mkdir /tmp/lfs_install && cd /tmp/lfs_install && \
-    git_lfs_tarball_url="https://www.github.com$(curl 'https://github.com/git-lfs/git-lfs/releases' | grep -o "/git-lfs/git-lfs/releases/download/v2..*/git-lfs-linux-amd64-v2..*.tar.gz" | sort -r | head -1 | tr -d '\n')" && \
-    curl -L --retry 5 "${git_lfs_tarball_url}" --output git-lfs.tar.gz && \
+    git_lfs_tarball_url=https://www.github.com$(curl 'https://github.com/git-lfs/git-lfs/releases' | grep -o "/git-lfs/git-lfs/releases/download/v2..*/git-lfs-linux-amd64-v2..*.tar.gz" | sort -r | head -1 | tr -d '\n') && \
+    curl -L --retry 5 $git_lfs_tarball_url --output git-lfs.tar.gz && \
     tar -xf git-lfs.tar.gz git-lfs && \
     cp ./git-lfs /usr/local/bin/git-lfs && \
     chmod 755 /usr/local/bin/git-lfs && \
@@ -79,7 +83,7 @@ ENV PATH=$CONDA_DIR/bin:$PATH \
 
 # Install conda, python, and jupyter
 RUN cd /tmp && \
-    wget --quiet https://repo.continuum.io/miniconda/Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh && \
+    curl --silent --show-error --output Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh https://repo.continuum.io/miniconda/Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh && \
     echo "$MINICONDA_MD5 *Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh" | md5sum -c - && \
     /bin/bash Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
     rm Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh && \
