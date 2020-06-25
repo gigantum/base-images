@@ -19,8 +19,7 @@ os_class: ubuntu
 os_release: '18.04'
 package_managers:
 - pip: null
-- conda3:
-    - requests=2.24*
+- conda3: null
 - apt: null
 readme: |
   **NOTE! Requires Gigantum Client >= 1.3.1 to enable GPU!**
