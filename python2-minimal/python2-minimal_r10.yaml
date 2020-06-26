@@ -8,7 +8,7 @@ image:
   namespace: gigantum
   repository: python2-minimal
   server: hub.docker.com
-  tag: 2a12571f94-2020-04-23
+  tag: 2105b1ed75-2020-06-26
 languages:
 - python2
 license: MIT
