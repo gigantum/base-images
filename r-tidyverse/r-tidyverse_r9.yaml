@@ -8,7 +8,7 @@ image:
   namespace: gigantum
   repository: r-tidyverse
   server: hub.docker.com
-  tag: b89c4808d6-2020-06-23
+  tag: 71e9f472fc-2020-06-26
 languages:
 - R
 - python3
@@ -22,8 +22,7 @@ package_managers:
   - r-cran-tidyverse=1.3.0-1cran1ppabionic0
   - r-cran-data.table=1.12.8-1cran1ppabionic0
 - pip: null
-- conda3:
-  - requests=2.24*
+- conda3: null
 readme: |
   A Base containing a conda-managed JupyterLab install with R 3.6 and tidyverse
   packages from the official CRAN PPA. OpenBLAS is configured.

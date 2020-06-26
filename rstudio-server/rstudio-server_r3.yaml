@@ -9,7 +9,7 @@ image:
   namespace: gigantum
   repository: rstudio-server
   server: hub.docker.com
-  tag: 9ada93a319-2020-06-23
+  tag: 71e9f472fc-2020-06-26
 languages:
 - R
 - python3
@@ -23,8 +23,7 @@ package_managers:
   - r-cran-tidyverse=1.3.0-1cran1ppabionic0
   - r-cran-data.table=1.12.8-1cran1ppabionic0
 - pip: null
-- conda3:
-  - requests=2.24*
+- conda3: null
 readme: |
   A Base containing R 3.6 and Tidyverse from the official CRAN PPA configured
   for use in RStudio® Server.  A conda-managed JupyterLab is also installed, and

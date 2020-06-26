@@ -8,7 +8,7 @@ image:
   namespace: gigantum
   repository: python3-data-science
   server: hub.docker.com
-  tag: b89c4808d6-2020-06-23
+  tag: 71e9f472fc-2020-06-26
 languages:
 - python3
 license: MIT
@@ -38,7 +38,6 @@ package_managers:
   - psutil=5.7*
   - pywavelets=1.1*
   - pyyaml=5.3*
-  - requests=2.24*
   - scikit-image=0.17*
   - scikit-learn=0.23*
   - scipy=1.4*

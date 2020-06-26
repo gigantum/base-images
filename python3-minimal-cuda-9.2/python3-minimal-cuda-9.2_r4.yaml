@@ -10,7 +10,7 @@ image:
   namespace: gigantum
   repository: python3-minimal-cuda-9.2
   server: hub.docker.com
-  tag: cb11fab767-2020-06-23
+  tag: 71e9f472fc-2020-06-26
 languages:
 - python3
 license: MIT
