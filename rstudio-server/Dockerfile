@@ -1,6 +1,6 @@
 # Copyright (c) Gigantum
 
-FROM gigantum/r-tidyverse:b89c4808d6-2020-06-23
+FROM gigantum/r-tidyverse:b4b4d267e0-2020-06-29
 LABEL maintainer="Gigantum <support@gigantum.com>"
 
 # downloading GPG keys is problematic, so we use the sha256 hash
@@ -11,7 +11,9 @@ LABEL maintainer="Gigantum <support@gigantum.com>"
 ENV RSTUDIO_SHA256=187af05cab1221282487fdc33f4b161484c3228eaade3d6697b1d41c206ee6d9 \
     RSTUDIO_VER=1.3.959
 
-RUN wget https://download2.rstudio.org/server/bionic/amd64/rstudio-server-${RSTUDIO_VER}-amd64.deb \
+RUN curl --silent --show-error --location \
+         --output rstudio-server-${RSTUDIO_VER}-amd64.deb \
+         https://download2.rstudio.org/server/bionic/amd64/rstudio-server-${RSTUDIO_VER}-amd64.deb \
     && echo $RSTUDIO_SHA256 rstudio-server-${RSTUDIO_VER}-amd64.deb | sha256sum -c \
     && apt-get install -yq ./rstudio-server-*-amd64.deb \
     && apt-get clean \

@@ -8,7 +8,7 @@ image:
   namespace: gigantum
   repository: r-tidyverse
   server: hub.docker.com
-  tag: 71e9f472fc-2020-06-26
+  tag: b4b4d267e0-2020-06-29
 languages:
 - R
 - python3
