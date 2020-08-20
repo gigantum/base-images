@@ -2,7 +2,7 @@ description: A minimal Base for a Demo
 development_tools:
 - jupyterlab
 - notebook
-id: python3-minimal
+id: st
 revision: 0
 image:
   namespace: gigantum
@@ -20,7 +20,7 @@ package_managers:
 - conda3: null
 - apt: null
 readme: |
-  A Base fora demo
+  A Base for a demo
 
   The following JupyterLab widgets are configured:
    - @jupyterlab/toc
