@@ -8,7 +8,7 @@ image:
   namespace: gigantum
   repository: st
   server: hub.docker.com
-  tag: 81042ad297-2020-08-19
+  tag: 95dbde1968-2020-08-20
 languages:
 - python3
 license: MIT
