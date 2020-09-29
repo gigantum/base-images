@@ -14,13 +14,16 @@ COPY stata16/unix/linux64p/setrwxp /usr/local/stata16
 WORKDIR /usr/local/stata16
 
 RUN chown --recursive root:root *
-RUN ./setrwxp now
+RUN sh ./setrwxp now
 
-RUN apt-get install -yqq --no-install-recommends libpng16-16
-
+# Configuration required for Jupyter integration
 ENV PATH /usr/local/stata16:$PATH
-RUN pip install stata_kernel
-RUN python -m stata_kernel.install
+RUN apt-get install -yqq --no-install-recommends libpng16-16 \
+    && apt-get clean
+RUN pip install stata_kernel \
+    && python -m stata_kernel.install \
+    # This cleans up caches
+    && rm -rf $GIGANTUM_WORKDIR
 
 # We return our WORKDIR to the standard Gigantum setting
 WORKDIR $GIGANTUM_WORKDIR
