@@ -8,6 +8,7 @@ LABEL maintainer="Gigantum <support@gigantum.com>"
 # that block all but web ports, and broken ipv6
 
 # Using variables mostly to make it obvious what needs to be updated in future
+# Check here for latest version: https://rstudio.com/products/rstudio/download/#download
 ENV RSTUDIO_SHA256=187af05cab1221282487fdc33f4b161484c3228eaade3d6697b1d41c206ee6d9 \
     RSTUDIO_VER=1.3.959
 
