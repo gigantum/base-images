@@ -27,7 +27,7 @@ readme: "A minimal Base containing Python 3.7 and JupyterLab with NVIDIA GPU sup
   \ 10.1, the GPU(s) will be available in your Project.\n\nThe following JupyterLab\
   \ widgets are configured:\n  - @jupyterlab/toc\n  - nbresuse to enable memory usage\
   \ in the status bar\n"
-revision: 2
+revision: 3
 schema: 1
 tags:
 - ubuntu
