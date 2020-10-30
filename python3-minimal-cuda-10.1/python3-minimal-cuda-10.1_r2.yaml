@@ -5,7 +5,7 @@ development_tools:
 - jupyterlab
 - notebook
 id: python3-minimal-cuda-10.1
-revision: 1
+revision: 2
 image:
   namespace: gigantum
   repository: python3-minimal-cuda-10.1
