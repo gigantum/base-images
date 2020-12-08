@@ -124,6 +124,7 @@ RUN cd /tmp && \
 
 # Do some minor configuration of Jupyterlab for our Dockerized environment
 # Currently just disabling the extension manager (which doesn't make sense for Gigantum AND is broken without nodejs)
+# see https://jupyterlab.readthedocs.io/en/stable/user/extensions.html#settings
 COPY page_config.json /opt/conda/share/jupyter/lab/settings
 
 # Expose port for jupyterlab

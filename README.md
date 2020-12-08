@@ -62,8 +62,6 @@ optional arguments:
   --no-cache            Boolean indicating if docker cache should be ignored
   --generate-base-config-yaml, -g
                         Boolean indicating if base image configuration files should be auto-generated after publish operation succeeds
-
-
 ```
 
 Remember, after the image is built and pushed you must create a new base spec yaml file. Be sure to increment the 
@@ -85,40 +83,69 @@ Dockerfile should instead be written to `_template/<template_name>/Dockerfile`. 
 should be set via `ARG` instructions in the Dockerfile with the values set in the associated `dockerfile_template.json`
 file.
 
-### Custom Base Images
+### Custom / Novel Base Images
 
-If you wish to use different bases than the "official" Gigantum bases included here (master branch is default in the
-Gigantum Client), you can create your own. We will not accept PRs targeting special use bases, but are open to 
-improvements and generally useful contributions. For specific use bases, try the following workflow:
+If you wish to use different bases than the "official" Gigantum bases included here or create a novel base for inclusion
+in this repository (master branch is default in the Gigantum Client), you are in luck! We will generally not accept PRs
+targeting special use bases, but are open to improvements and generally useful contributions. For specific use bases,
+try the following workflow:
 
 - Fork this repository
 - Create a new base by copying and editing an existing base directory
+  - Note that we have set XDG_CACHE_DIR to an unusual location, so that when a project runs, the cache directory is
+    persistent on the host filesystem. You will likely want to delete the entire `GIGANTUM_WORKDIR` directory in any RUN
+    statement that would keep files in the XDG cache (e.g., pip operations)
 - Create a new repository on DockerHub for your base
 - Build and publish your base using `python3 base.py <base-name> --namespace <your-dockerhub-namespace>`
 - Update the base spec yaml file with the tag provided after build and publish (should start at revision 0)
 - Commit changes and push to your fork on GitHub
 - Update the configuration file for your Gigantum Client instance to point to your fork instead of this repository
-    - In your Gigantum working directory (`~/gigantum`) create a config file override. To do this, write the following to
-    `~/gigantum/.labmanager/config.yaml` (There is some extra information there because you currently have to specify 
-    the entire subtree for the `environment` key):
-    
-    ```    
+    - In your Gigantum working directory (`~/gigantum`) create a config file override. To do this, write the following
+      to `~/gigantum/.labmanager/config.yaml` (There is some extra information there because you currently have to
+      specify the entire subtree for the `environment` key):
+
+    ```
     environment:
       repo_url:
-        - "https://github.com/<your-github-namespace>/base-images.git"    
+        - "https://github.com/<your-github-namespace>/base-images.git"
       iframe:
         enabled: false
         allowed_origin: localhost:10000
     ```
     - If you create different branches, you can select the branch with the following syntax:
 
-    ```    
+    ```
     environment:
       repo_url:
-        - "https://github.com/<your-github-namespace>/base-images.git@<branch-name>"    
+        - "https://github.com/<your-github-namespace>/base-images.git@<branch-name>"
       iframe:
         enabled: false
         allowed_origin: localhost:10000
     ```
 - Restart Gigantum Client
 - Use your custom base!
+
+### Notes on creating new versions of bases
+
+- Use conda for everything you can - conda will not count pip-installed packages as fulfilling dependencies, and so may
+  re-download and overwrite existing pip-installed packages!
+- Special concerns for each IDE - generally, these will not need to change, but good to keep in mind:
+  - *RStudio*: currently we override some security settings in the `rserver.conf` file. Additionally, there is a
+    `user-settings` file that is copied into `/tmp` and later copied into the user's home directory at project launch.
+    This is critical to set the working directory of the RStudio server to the project code directory. We also disable
+    some annoying auto-save / auto-load features that are a holdover from the Bell Labs days.
+  - *Jupyter*: There have been several tricky points of configuration. The first is ensuring that nbresuse is set up
+    properly. This seems to have been resolved in recent versions of conda (everything is ok with a simple `conda
+    install nbresuse`). Relatedly, we install a specific version of nodejs that is available as a Docker environment
+    var. This ensures that re-installation of nodejs can easily pin to the same version so that jupyter labextensions
+    don't need to be rebuilt for a different version. Lastly, Recent versions of Jupyterlab have enabled the extension
+    configuration UI by default. This is inconsistent with how we manage the environment, so we disable it with
+    `page_config.json` (a link to managing Jupyterlab settings is in the Dockerfile).
+- Determining new package versions can be done in the relevant Python base. Do a `conda update --all` in the
+  python3-minimal base to see what versions of nodejs, jupyter, and friends are available. Do the same in the data
+  science base to determine upgraded versions for those additional packages.  R packages are installed by apt and so
+  will be set to the latest versions by default. The latest version of RStudio can be found via the RStudio website.
+- A somewhat tedious detail currently is that after the above step, you ALSO need to copy the yaml spec and update to
+  new versions for packages. The package versions (including the Python version) should also be verified by launching a
+  base image before publishing. These steps could both be automated and are described briefly in #46 (issue in this
+  repo).
