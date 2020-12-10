@@ -3,7 +3,7 @@
 # which are Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 
-FROM gigantum/python3-minimal:d11cc37736-2020-06-25
+FROM gigantum/python3-minimal:a4b6e0bb54-2020-12-08
 LABEL maintainer="Gigantum <support@gigantum.com>"
 
 RUN apt-get update \

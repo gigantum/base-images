@@ -1,6 +1,6 @@
 # Copyright (c) Gigantum
 
-FROM gigantum/r-tidyverse:b4b4d267e0-2020-06-29
+FROM gigantum/r-tidyverse:32fc2fb9e8-2020-12-10
 LABEL maintainer="Gigantum <support@gigantum.com>"
 
 # downloading GPG keys is problematic, so we use the sha256 hash
