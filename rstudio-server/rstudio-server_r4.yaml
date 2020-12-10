@@ -14,7 +14,7 @@ languages:
 - R
 - python3
 license: MIT
-name: "R 3.6 Tidyverse (+ Python3) in RStudio\xAE Server (+ Jupyter)"
+name: "R 3.6 Tidyverse in RStudio\xAE Server (+ Python 3.7 w/ Jupyter)"
 os_class: ubuntu
 os_release: '18.04'
 package_managers:
