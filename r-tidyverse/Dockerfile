@@ -3,7 +3,7 @@
 # The below is a relatively straightforward adaptation of directions at
 # https://cran.r-project.org/bin/linux/ubuntu/README.html
 
-FROM gigantum/python3-minimal:d11cc37736-2020-06-25
+FROM gigantum/python3-minimal:a4b6e0bb54-2020-12-08
 LABEL maintainer="Gigantum <support@gigantum.com>"
 
 # I downloaded this key using
