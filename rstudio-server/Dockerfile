@@ -1,6 +1,6 @@
 # Copyright (c) Gigantum
 
-FROM gigantum/r-tidyverse:b4b4d267e0-2020-06-29
+FROM gigantum/r-tidyverse:32fc2fb9e8-2020-12-10
 LABEL maintainer="Gigantum <support@gigantum.com>"
 
 # downloading GPG keys is problematic, so we use the sha256 hash
@@ -34,5 +34,8 @@ EXPOSE 8787
 # It's best to have COPYs at the end so you can change them without a massive
 # rebuild
 COPY rserver.conf /etc/rstudio/rserver.conf
+COPY rstudio-prefs.json /etc/rstudio/rstudio-prefs.json
 # This will get copied out at Project Container creation
+# Note: this file is deprecated and will be removed in the future! 
+#       use rstudio-prefs.json if you want to change anything.
 COPY user-settings /tmp
