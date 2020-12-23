@@ -9,12 +9,12 @@ image:
   namespace: gigantum
   repository: rstudio-server
   server: hub.docker.com
-  tag: 32fc2fb9e8-2020-12-10
+  tag: fdd18e0894-2020-12-23
 languages:
 - R
 - python3
 license: MIT
-name: "R 3.6 Tidyverse in RStudio\xAE Server (+ Python 3.7 w/ Jupyter)"
+name: "R 3.6 Tidyverse (+ Python3) in RStudio\xAE Server (+ Jupyter)"
 os_class: ubuntu
 os_release: '18.04'
 package_managers:
