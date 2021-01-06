@@ -4,5 +4,5 @@
     "auto_save_idle_ms": 5000,
     "always_save_history": false,
     "check_for_updates": false,
-    "initial_working_directory": "/mnt/labbook"
+    "initial_working_directory": "/mnt/labbook/code"
 }
