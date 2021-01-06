@@ -9,7 +9,7 @@ image:
   namespace: gigantum
   repository: rstudio-server
   server: hub.docker.com
-  tag: fdd18e0894-2020-12-23
+  tag: 549b56fa4e-2021-01-06
 languages:
 - R
 - python3
@@ -24,18 +24,14 @@ package_managers:
   - r-cran-data.table=1.12.8-1cran1ppabionic0
 - pip: null
 - conda3: null
-readme: |
-  A Base containing R 3.6 and Tidyverse from the official CRAN PPA configured
-  for use in RStudio® Server.  A conda-managed JupyterLab is also installed, and
-  OpenBLAS is configured.
-
-  You should generally use Apt with `r-cran-<package name>` to quickly install
-  "package name" from CRAN. You can also use Docker snippets for approaches
-  like `install.packages` or `devtools::install_github`. Don't hesitate to use
-  the "discuss" link (in the lower-right "?" bubble in the app) if you'd like
-  some guidance!
-
-  *RStudio® and the RStudio logo are registered trademarks of RStudio, Inc.*
+readme: "A Base containing R 3.6 and Tidyverse from the official CRAN PPA configured\n\
+  for use in RStudio\xAE Server.  A conda-managed JupyterLab is also installed, and\n\
+  OpenBLAS is configured.\n\nYou should generally use Apt with `r-cran-<package name>`\
+  \ to quickly install\n\"package name\" from CRAN. You can also use Docker snippets\
+  \ for approaches\nlike `install.packages` or `devtools::install_github`. Don't hesitate\
+  \ to use\nthe \"discuss\" link (in the lower-right \"?\" bubble in the app) if you'd\
+  \ like\nsome guidance!\n\n*RStudio\xAE and the RStudio logo are registered trademarks\
+  \ of RStudio, Inc.*\n"
 revision: 4
 schema: 1
 tags:
