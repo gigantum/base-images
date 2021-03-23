@@ -9,7 +9,8 @@ ARG BASE_IMAGE
 # Start Image Def
 FROM $BASE_IMAGE
 LABEL maintainer="Gigantum <support@gigantum.com>"
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive \
+    GIT_VERSION=2.31.0
 
 # Install system level dependencies
 RUN apt-get update \
@@ -24,6 +25,7 @@ RUN apt-get update \
         fonts-liberation \
         gosu \
         tzdata \
+        wget \
     && apt-get clean
 
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && locale-gen
@@ -39,8 +41,7 @@ RUN apt-get update \
         libcurl4-openssl-dev \
     && mkdir /tmp/gitbuild && cd /tmp/gitbuild \
     # Get the latest git tarball
-    && git_tarball_url=https://www.github.com$(curl 'https://github.com/git/git/tags' | grep -o "/git/git/archive/v2\..*\.tar\.gz" | sort -r | head -1 | tr -d '\n') \
-    && curl -L --retry 5 $git_tarball_url --output git-source.tar.gz \
+    && curl -L --retry 5 "https://github.com/git/git/archive/refs/tags/v${GIT_VERSION}.tar.gz" --output git-source.tar.gz \
     && tar -xf git-source.tar.gz --strip 1 \
     && rm git-source.tar.gz \
     && make configure \
