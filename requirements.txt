@@ -1,2 +1,2 @@
 docker==3.5.0
-PyYAML==3.12
+PyYAML==5.4
