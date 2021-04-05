@@ -116,6 +116,8 @@ RUN cd /tmp && \
     # Alias conda -> mamba and cconda -> conda for automatic backwards compatibility with the Client
     echo "alias conda="mamba"" >> /etc/profile.d/00-mamba.sh && \
     echo "alias cconda="conda"" >> /etc/profile.d/00-mamba.sh && \
+    # Create settings directory for jupyterlab
+    mkdir  /opt/conda/share/jupyter/lab/settings && \
     # XDG_CACHE_DIR is currently located in the mounted project / workdir, so we delete the whole thing
     rm -rf $GIGANTUM_WORKDIR && \
     conda clean --all
@@ -123,7 +125,7 @@ RUN cd /tmp && \
 # Do some minor configuration of Jupyterlab for our Dockerized environment
 # Currently just disabling the extension manager (which doesn't make sense for Gigantum AND is broken without nodejs)
 # see https://jupyterlab.readthedocs.io/en/stable/user/extensions.html#settings
-COPY page_config.json /opt/conda/share/jupyter/lab/settings
+COPY overrides.json /opt/conda/share/jupyter/lab/settings/
 
 # Expose port for jupyterlab
 EXPOSE 8888
