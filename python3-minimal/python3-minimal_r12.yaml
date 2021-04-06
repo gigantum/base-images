@@ -16,9 +16,9 @@ name: Python3 Minimal
 os_class: ubuntu
 os_release: '18.04'
 package_managers:
-- pip: null
-- conda3: null
-- apt: null
+# - pip: null
+# - conda3: null
+# - apt: null
 readme: "A minimal Base with Python 3.7 and a recent version of JupyterLab\n\nThe\
   \ following JupyterLab widgets are configured:\n  - @jupyterlab/toc\n  - nbresuse\
   \ to display memory usage in the status bar\n"
