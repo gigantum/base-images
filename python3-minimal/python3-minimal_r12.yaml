@@ -8,7 +8,7 @@ image:
   namespace: gigantum
   repository: python3-minimal
   server: hub.docker.com
-  tag: 15bccc9e0d-2021-04-05
+  tag: 79b4ccd5e6-2021-04-05
 languages:
 - python3
 license: MIT
@@ -16,9 +16,9 @@ name: Python3 Minimal
 os_class: ubuntu
 os_release: '18.04'
 package_managers:
-- pip: null
-- conda3: null
-- apt: null
+# - pip: null
+# - conda3: null
+# - apt: null
 readme: "A minimal Base with Python 3.7 and a recent version of JupyterLab\n\nThe\
   \ following JupyterLab widgets are configured:\n  - @jupyterlab/toc\n  - nbresuse\
   \ to display memory usage in the status bar\n"

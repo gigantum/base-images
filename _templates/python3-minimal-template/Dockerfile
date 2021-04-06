@@ -111,6 +111,7 @@ RUN cd /tmp && \
       jupyterlab=3.0.12 \
       notebook=6.2.0 \
       xeus-python=0.12.2 \
+      jupyter-resource-usage \
       # Pip is installed by default by conda, but it's mission
       # critical so we make it explicit
       pip && \
