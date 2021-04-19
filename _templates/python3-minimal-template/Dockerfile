@@ -32,6 +32,8 @@ RUN apt-get update \
         fonts-liberation \
         gosu \
         tzdata \
+        less \
+        vim \
         wget \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
