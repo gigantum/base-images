@@ -19,19 +19,24 @@ os_class: ubuntu
 os_release: '20.04'
 package_managers:
 - apt:
-  - r-recommended=3.6.2-1bionic
-  - r-cran-tidyverse=1.3.0-1cran1ppabionic0
-  - r-cran-data.table=1.12.8-1cran1ppabionic0
+  - r-recommended=4.0.5-1.2004.0
+  - r-cran-tidyverse=1.3.1-1cran1.2004.0
+  - r-cran-data.table=1.14.0-1cran1.2004.0
+  - r-cran-devtools=2.4.0-1cran1.2004.0
 - pip: null
 - conda3: null
-readme: "A Base containing R 4.0 and Tidyverse from the official CRAN PPA configured\n\
-  for use in RStudio\xAE Server. JupyterLab 3 is also installed, and\n\
-  OpenBLAS is configured.\n\nYou should generally use apt with `r-cran-<package name>`\
-  \ to quickly install\n\"package name\" from CRAN. You can also use Docker snippets\
-  \ for approaches\nlike `install.packages` or `devtools::install_github`. Don't hesitate\
-  \ to use\nthe \"discuss\" link (in the lower-right \"?\" bubble in the app) if you'd\
-  \ like\nsome guidance!\n\n*RStudio\xAE and the RStudio logo are registered trademarks\
-  \ of RStudio, Inc.*\n"
+readme: |
+  A Base containing R 4.0 and Tidyverse from the official CRAN PPA configured for use in RStudio\xAE Server. 
+  JupyterLab 3 is also installed with Python 3.8 and OpenBLAS is configured.
+   
+  You should generally use apt with `r-cran-<package name>` to quickly install
+  "package name" from CRAN. You can also use Docker snippets for approaches
+  like `install.packages` or `devtools::install_github`. Don''t hesitate to use
+  the "discuss" link (in the lower-right "?" bubble in the app) if you''d like
+  some guidance!
+
+  *RStudio\xAE and the RStudio logo are registered trademarks of RStudio, Inc.*"
+
 revision: 5
 schema: 1
 tags:
