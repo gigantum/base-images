@@ -21,10 +21,17 @@ package_managers:
 - pip: null
 - conda3: null
 - apt: null
-readme: "A minimal Base containing Python 3.8 and JupyterLab 3 with NVIDIA GPU support\n\
-  via CUDA 9.2\n\nThis base built from nvidia/cuda:9.2-cudnn7-runtime-ubuntu18.04\n\
-  \nIf you run this Base on a host with NVIDIA drivers installed that support\nCUDA\
-  \ 9.2, the GPUs will be available in your Project."
+readme: |
+  A minimal Base containing Python 3.8 and JupyterLab 3 with NVIDIA GPU support via CUDA 9.2
+  
+  This base built from nvidia/cuda:9.2-cudnn7-runtime-ubuntu18.04 If you run this Base on a host with NVIDIA drivers installed that support
+  CUDA 9.2, the GPUs will be available in your Project.
+
+  This Base is configured with the standard python3 kernel and the xeus-python kernel which enables visual debugging!
+
+  Also, note that with the new Jupyterlab 3 extension system, extensions typically can be pip/conda installed and no longer require nodejs or
+  rebuilding Jupyterlab. If nodejs is required for an extension you which to install, install it via conda. You can use the Docker Snippet feature
+  to run any additional `jupyter labextension install` commands.
 revision: 6
 schema: 1
 tags:

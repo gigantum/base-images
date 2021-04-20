@@ -58,7 +58,7 @@ RUN conda install --quiet --yes nodejs=15.14.0 && \
     conda clean --all -f -y
 
 # Set up additional widgets
-RUN pip install jupyterlab-geojson jupyter_bokeh && \
+RUN pip install jupyterlab-geojson jupyter_bokeh dask-labextension && \
     export NODE_OPTIONS=--max-old-space-size=4096 \
     && jupyter labextension install jupyterlab-plotly@4.14.3 \
     # unset just in case

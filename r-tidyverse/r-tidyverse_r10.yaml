@@ -1,4 +1,4 @@
-description: A JupyterLab install for CRAN PPA R 3.6 + tidyverse packages, etc.
+description: A JupyterLab install for CRAN PPA R 4.0 + tidyverse packages, etc.
 development_tools:
 - jupyterlab
 - notebook
@@ -13,9 +13,9 @@ languages:
 - R
 - python3
 license: MIT
-name: R 3.6 with Tidyverse (+ Python3) in Jupyter
+name: R 4.0 with Tidyverse in JupyterLab 3 (+ Python 3.8)
 os_class: ubuntu
-os_release: '18.04'
+os_release: '20.04'
 package_managers:
 - apt:
   - r-recommended=3.6.3-1bionic
