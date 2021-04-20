@@ -1,18 +1,15 @@
+# Note, some docker commands taken from/inspired by the standard docker-stacks maintained
+# by the Jupyter team: https://github.com/jupyter/docker-stacks/
+# Copyright (c) Jupyter Development Team.
+# Distributed under the terms of the Modified BSD License.
+
 # Template arguments
 ARG BASE_IMAGE
 
 # Start Image Def
 FROM $BASE_IMAGE
 LABEL maintainer="Gigantum <support@gigantum.com>"
-
-# Conda/Miniforge Arguments
-ARG conda_version="4.10.0"
-ARG miniforge_patch_number="0" 
-ARG miniforge_version="${conda_version}-${miniforge_patch_number}" 
-ARG miniforge_sha256="c56cc2da96043688c6bdb521d825de27754de0a342d5228ba3155cd94532ff75"
-
-ENV DEBIAN_FRONTEND=noninteractive \
-    GIT_VERSION=2.31.1
+ENV DEBIAN_FRONTEND noninteractive
 
 # Install system level dependencies
 RUN apt-get update \
@@ -27,10 +24,7 @@ RUN apt-get update \
         fonts-liberation \
         gosu \
         tzdata \
-        less \
-        vim \
-        wget \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+    && apt-get clean
 
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && locale-gen
 
@@ -41,11 +35,12 @@ RUN apt-get update \
         dh-autoreconf \
         openssl \
         libz-dev \
-        libexpat1 libexpat1-dev \
-        libcurl4 libcurl4-openssl-dev \
+        libexpat1-dev \
+        libcurl4-openssl-dev \
     && mkdir /tmp/gitbuild && cd /tmp/gitbuild \
     # Get the latest git tarball
-    && curl -L --retry 5 "https://github.com/git/git/archive/refs/tags/v${GIT_VERSION}.tar.gz" --output git-source.tar.gz \
+    && git_tarball_url=https://www.github.com$(curl 'https://github.com/git/git/tags' | grep -o "/git/git/archive/refs/tags/v2\..*\.tar\.gz" | sort -r | head -1 | tr -d '\n') \
+    && curl -L --retry 5 $git_tarball_url --output git-source.tar.gz \
     && tar -xf git-source.tar.gz --strip 1 \
     && rm git-source.tar.gz \
     && make configure \
@@ -55,9 +50,9 @@ RUN apt-get update \
     && make install \
     && cd ~ \
     && rm -rf /tmp/gitbuild \
-    && apt-get -qq -y remove dh-autoreconf libz-dev libexpat1-dev libcurl4-openssl-dev \
+    && apt-get -qq -y remove dh-autoreconf \
     && apt-get -qq -y autoremove \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+    && apt-get clean
 
 # Get the latest git LFS binary
 RUN mkdir /tmp/lfs_install && cd /tmp/lfs_install && \
@@ -75,26 +70,27 @@ ENV CONDA_DIR=/opt/conda \
     GIGANTUM_SHARE=/mnt/share \
     GIGANTUM_WORKDIR=/mnt/labbook \
     SHELL=/bin/bash \
+    MINICONDA_VERSION=py37_4.8.3 \
+    MINICONDA_MD5=751786b92c00b1aeae3f017b781018df \
+    GIGANTUM_NODE_VERSION=12.16.1 \
     LC_ALL=en_US.UTF-8 \
-    LANG=en_US.UTF-8 \
-    CONDA_VERSION="${conda_version}" \
-    MINIFORGE_VERSION="${miniforge_version}"
-
+    LANG=en_US.UTF-8
 # Now we can use the variables defined above
 ENV PATH=$CONDA_DIR/bin:$PATH \
     JUPYTER_RUNTIME_DIR=$GIGANTUM_SHARE/jupyter/runtime \
     # We use the future location of the mounted project - we need to ensure we delete this directory below
     XDG_CACHE_HOME=$GIGANTUM_WORKDIR/code/untracked/.cache
 
-# Install conda, mamba, and jupyter
+# Install conda, python, and jupyter
 RUN cd /tmp && \
-    echo "https://github.com/conda-forge/miniforge/releases/download/${miniforge_version}/Mambaforge-${miniforge_version}-Linux-x86_64.sh" && \
-    wget --quiet "https://github.com/conda-forge/miniforge/releases/download/${miniforge_version}/Mambaforge-${miniforge_version}-Linux-x86_64.sh" && \
-    echo "${miniforge_sha256} *Mambaforge-${miniforge_version}-Linux-x86_64.sh" | sha256sum -c - && \
-    /bin/bash "Mambaforge-${miniforge_version}-Linux-x86_64.sh" -f -b -p $CONDA_DIR && \
-    rm "Mambaforge-${miniforge_version}-Linux-x86_64.sh" && \
-    echo "conda ${conda_version}" >> $CONDA_DIR/conda-meta/pinned && \
+    curl --silent --show-error --location --output Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh \
+        https://repo.continuum.io/miniconda/Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh && \
+    echo "$MINICONDA_MD5 *Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh" | md5sum -c - && \
+    /bin/bash Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
+    rm Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh && \
+    conda config --system --prepend channels conda-forge && \
     # We don't want the `r` channel
+    conda config --system --remove channels defaults && \
     conda config --system --append channels anaconda && \
     # Recommended by conda-forge
     conda config --set channel_priority strict && \
@@ -102,26 +98,34 @@ RUN cd /tmp && \
     conda config --system --set show_channel_urls true && \
     # We update conda explicitly to get any gains in performance, etc.
     # Be sure to check the version of requests installed by conda and update the yaml files!
-    mamba update --all --quiet --yes && \
+    conda update --quiet --yes conda && \
+    conda update --all --quiet --yes && \
     # Now installing nbresuse via conda - it's not working via pip for some reason
-    mamba install --quiet --yes -c conda-forge \
-      jupyterlab=3.0.14 \
-      notebook=6.2.0 \
-      xeus-python=0.12.3 \
-      jupyter-resource-usage \
+    conda install --quiet --yes -c conda-forge \
+      jupyterlab=2.3.1 \
+      notebook=6.0 \
+      numpydoc=1.0 \
+      nbresuse \
       # Pip is installed by default by conda, but it's mission
       # critical so we make it explicit
-      pip && \
-    # Create settings directory for jupyterlab
-    mkdir  /opt/conda/share/jupyter/lab/settings && \
+      pip \
+      # We pin the version of nodejs so we can be sure to re-install the same
+      # version later - avoiding jupyterlab extension rebuilds and generally
+      # improving compatability
+      nodejs==$GIGANTUM_NODE_VERSION && \
+    jupyter labextension install @jupyterlab/toc && \
+    npm cache clean --force && \
+    rm -rf $CONDA_DIR/share/jupyter/lab/staging && \
     # XDG_CACHE_DIR is currently located in the mounted project / workdir, so we delete the whole thing
     rm -rf $GIGANTUM_WORKDIR && \
+    rm -rf /root/.node-gyp && \
+    conda remove --quiet --yes nodejs && \
     conda clean --all
 
 # Do some minor configuration of Jupyterlab for our Dockerized environment
 # Currently just disabling the extension manager (which doesn't make sense for Gigantum AND is broken without nodejs)
 # see https://jupyterlab.readthedocs.io/en/stable/user/extensions.html#settings
-COPY overrides.json /opt/conda/share/jupyter/lab/settings/
+COPY page_config.json /opt/conda/share/jupyter/lab/settings
 
 # Expose port for jupyterlab
 EXPOSE 8888

@@ -1,0 +1,42 @@
+description: "RStudio\xAE Server with CRAN PPA R 4.0 + tidyverse packages, etc."
+development_tools:
+- rstudio
+- jupyterlab
+- notebook
+icon: data:image/png;base64,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
+id: rstudio-server
+image:
+  namespace: gigantum
+  repository: rstudio-server
+  server: hub.docker.com
+  tag: a349a41d8b-2021-04-20
+languages:
+- R
+- python3
+license: MIT
+name: "R 4.0 Tidyverse in RStudio\xAE Server (w/ JupyterLab 3 and Python 3.8)"
+os_class: ubuntu
+os_release: '20.04'
+package_managers:
+- apt:
+  - r-recommended=3.6.2-1bionic
+  - r-cran-tidyverse=1.3.0-1cran1ppabionic0
+  - r-cran-data.table=1.12.8-1cran1ppabionic0
+- pip: null
+- conda3: null
+readme: "A Base containing R 4.0 and Tidyverse from the official CRAN PPA configured\n\
+  for use in RStudio\xAE Server. JupyterLab 3 is also installed, and\n\
+  OpenBLAS is configured.\n\nYou should generally use apt with `r-cran-<package name>`\
+  \ to quickly install\n\"package name\" from CRAN. You can also use Docker snippets\
+  \ for approaches\nlike `install.packages` or `devtools::install_github`. Don't hesitate\
+  \ to use\nthe \"discuss\" link (in the lower-right \"?\" bubble in the app) if you'd\
+  \ like\nsome guidance!\n\n*RStudio\xAE and the RStudio logo are registered trademarks\
+  \ of RStudio, Inc.*\n"
+revision: 5
+schema: 1
+tags:
+- ubuntu
+- rstats
+- rstudio
+- jupyterlab
+url: null

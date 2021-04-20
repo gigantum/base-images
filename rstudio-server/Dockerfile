@@ -1,6 +1,6 @@
 # Copyright (c) Gigantum
 
-FROM gigantum/r-tidyverse:32fc2fb9e8-2020-12-10
+FROM gigantum/r-tidyverse:a349a41d8b-2021-04-20
 LABEL maintainer="Gigantum <support@gigantum.com>"
 
 # downloading GPG keys is problematic, so we use the sha256 hash
@@ -9,16 +9,17 @@ LABEL maintainer="Gigantum <support@gigantum.com>"
 
 # Using variables mostly to make it obvious what needs to be updated in future
 # Check here for latest version: https://rstudio.com/products/rstudio/download/#download
-ENV RSTUDIO_SHA256=187af05cab1221282487fdc33f4b161484c3228eaade3d6697b1d41c206ee6d9 \
-    RSTUDIO_VER=1.3.959
+ENV RSTUDIO_SHA256=a46bbfbcb468e7af6aa12280adb830056f4a10e3457fd2f5969bb31d4d476939 \
+    RSTUDIO_VER=1.4.1106
 
-RUN curl --silent --show-error --location \
-         --output rstudio-server-${RSTUDIO_VER}-amd64.deb \
-         https://download2.rstudio.org/server/bionic/amd64/rstudio-server-${RSTUDIO_VER}-amd64.deb \
-    && echo $RSTUDIO_SHA256 rstudio-server-${RSTUDIO_VER}-amd64.deb | sha256sum -c \
-    && apt-get install -yq ./rstudio-server-*-amd64.deb \
-    && apt-get clean \
-    && rm rstudio-server-*-amd64.deb
+RUN curl --silent --show-error --location --output rstudio-server-${RSTUDIO_VER}-amd64.deb \
+         https://download2.rstudio.org/server/bionic/amd64/rstudio-server-${RSTUDIO_VER}-amd64.deb && \
+    echo $RSTUDIO_SHA256 rstudio-server-${RSTUDIO_VER}-amd64.deb | sha256sum -c && \
+    apt-get update && apt-get install -yq gdebi-core && \
+    gdebi ./rstudio-server-*-amd64.deb && \
+    apt-get remove -qq -y gdebi-core && \
+    apt-get clean && rm -rf /var/lib/apt/lists/* && \
+    rm ./rstudio-server-*-amd64.deb
 
 # Install system level dependencies
 RUN apt-get update \
@@ -26,7 +27,7 @@ RUN apt-get update \
         # RStudio requirements for notebooks
         r-cran-catools \
         r-cran-bitops \
-    && apt-get clean
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Expose port for RStudio
 EXPOSE 8787
