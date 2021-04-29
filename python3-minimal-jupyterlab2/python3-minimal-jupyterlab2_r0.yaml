@@ -8,7 +8,7 @@ image:
   namespace: gigantum
   repository: python3-minimal-jupyterlab2
   server: hub.docker.com
-  tag: a349a41d8b-2021-04-19
+  tag: b51bd7ffc5-2021-04-29
 languages:
 - python3
 license: MIT
@@ -20,16 +20,15 @@ package_managers:
 - conda3: null
 - apt: null
 readme: 'NOTE: GIGANTUM HAS MOVED TO PRIMARY SUPPORT OF JUPYTERLAB 3. THIS BASE IS
-  MAINTAINED FOR USERS WHO CANNOT UPGRADE TO JUPYTERLAB 3 or Python 3.8 YET AND MAY BE REMOVED IN THE FUTURE.
+  MAINTAINED FOR USERS WHO CANNOT UPGRADE TO JUPYTERLAB 3 or Python 3.8 YET AND MAY
+  BE REMOVED IN THE FUTURE.
 
   A minimal Base with Python 3.7 and JupyterLab 2
 
   The following JupyterLab widgets are configured:
 
-  - @jupyterlab/toc
-  - nbresuse to display memory usage in the status bar
-  '
-revision: 1
+  - @jupyterlab/toc - nbresuse to display memory usage in the status bar '
+revision: 0
 schema: 1
 tags:
 - ubuntu

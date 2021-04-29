@@ -3,7 +3,7 @@
 # which are Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 
-FROM gigantum/python3-minimal:a349a41d8b-2021-04-19
+FROM gigantum/python3-minimal:f415d5dff3-2021-04-29
 LABEL maintainer="Gigantum <support@gigantum.com>"
 
 RUN apt-get update && \
@@ -14,7 +14,7 @@ RUN apt-get update && \
         libxrender1 libxext6 libgl1-mesa-glx \
         # ffmpeg for matplotlib anim & dvipng+cm-super for latex labels
         ffmpeg dvipng cm-super && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+    apt-get clean
 
 # Install Python packages
 RUN conda install --quiet --yes nodejs=15.14.0 && \

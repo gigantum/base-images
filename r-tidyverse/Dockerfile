@@ -3,7 +3,7 @@
 # The below is a relatively straightforward adaptation of directions at
 # https://cran.r-project.org/bin/linux/ubuntu/README.html
 
-FROM gigantum/python3-minimal:a349a41d8b-2021-04-19
+FROM gigantum/python3-minimal:f415d5dff3-2021-04-29
 LABEL maintainer="Gigantum <support@gigantum.com>"
 
 # Install system level dependencies

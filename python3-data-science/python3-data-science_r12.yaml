@@ -1,4 +1,5 @@
-description: A Base containing Python 3.8, JupyterLab 3, and common data science packages pre-installed
+description: A Base containing Python 3.8, JupyterLab 3, and common data science packages
+  pre-installed
 development_tools:
 - jupyterlab
 - notebook
@@ -8,7 +9,7 @@ image:
   namespace: gigantum
   repository: python3-data-science
   server: hub.docker.com
-  tag: 1cddca0828-2021-04-20
+  tag: b51bd7ffc5-2021-04-29
 languages:
 - python3
 license: MIT
@@ -57,7 +58,7 @@ package_managers:
   - libgl1-mesa-glx
   - ffmpeg
   - dvipng
-  - cm-super 
+  - cm-super
 readme: |
   A Base containing Python 3.8, JupyterLab 3, and common Python data science packages pre-installed. 
   

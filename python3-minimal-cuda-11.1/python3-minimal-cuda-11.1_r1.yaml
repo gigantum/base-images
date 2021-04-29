@@ -10,7 +10,7 @@ image:
   namespace: gigantum
   repository: python3-minimal-cuda-11.1
   server: hub.docker.com
-  tag: a349a41d8b-2021-04-19
+  tag: b51bd7ffc5-2021-04-29
 languages:
 - python3
 license: MIT
@@ -21,17 +21,26 @@ package_managers:
 - pip: null
 - conda3: null
 - apt: null
-readme: |
-  A minimal Base containing Python 3.8 and JupyterLab 3 with NVIDIA GPU support via CUDA 11.1
-  
-  This base built from nvidia/cuda:11.1-cudnn8-runtime-ubuntu18.04. If you run this Base on a host with NVIDIA drivers installed that support
+readme: 'A minimal Base containing Python 3.8 and JupyterLab 3 with NVIDIA GPU support
+  via CUDA 11.1
+
+
+  This base built from nvidia/cuda:11.1-cudnn8-runtime-ubuntu18.04. If you run this
+  Base on a host with NVIDIA drivers installed that support
   CUDA 11.1, the GPUs will be available in your Project.
 
-  This Base is configured with the standard python3 kernel and the xeus-python kernel which enables visual debugging!
 
-  Also, note that with the new Jupyterlab 3 extension system, extensions typically can be pip/conda installed and no longer require nodejs or
-  rebuilding Jupyterlab. If nodejs is required for an extension you which to install, install it via conda. You can use the Docker Snippet feature
+  This Base is configured with the standard python3 kernel and the xeus-python kernel
+  which enables visual debugging!
+
+
+  Also, note that with the new Jupyterlab 3 extension system, extensions typically
+  can be pip/conda installed and no longer require nodejs or
+  rebuilding Jupyterlab. If nodejs is required for an extension you which to install,
+  install it via conda. You can use the Docker Snippet feature
   to run any additional `jupyter labextension install` commands.
+
+  '
 revision: 1
 schema: 1
 tags:
