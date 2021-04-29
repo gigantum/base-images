@@ -30,7 +30,7 @@ RUN apt-get update \
         less \
         vim \
         wget \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+    && apt-get clean
 
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && locale-gen
 
@@ -57,7 +57,7 @@ RUN apt-get update \
     && rm -rf /tmp/gitbuild \
     && apt-get -qq -y remove dh-autoreconf libz-dev libexpat1-dev libcurl4-openssl-dev \
     && apt-get -qq -y autoremove \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+    && apt-get clean
 
 # Get the latest git LFS binary
 RUN mkdir /tmp/lfs_install && cd /tmp/lfs_install && \

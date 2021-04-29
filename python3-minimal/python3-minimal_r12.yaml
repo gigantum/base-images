@@ -8,13 +8,13 @@ image:
   namespace: gigantum
   repository: python3-minimal
   server: hub.docker.com
-  tag: cfdd76e4a6-2021-04-29
+  tag: f415d5dff3-2021-04-29
 languages:
 - python3
 license: MIT
 name: Python3 Minimal
 os_class: ubuntu
-os_release: '18.04'
+os_release: '20.04'
 package_managers:
 - pip: null
 - conda3: null
@@ -27,11 +27,10 @@ readme: 'A minimal Base with Python 3.8 and a recent version of JupyterLab 3.
 
 
   Also, note that with the new Jupyterlab 3 extension system, extensions typically
-  can be pip/conda installed and no longer require nodejs or
-  rebuilding Jupyterlab. If nodejs is required for an extension you which to install,
-  install it via conda. You can use the Docker Snippet feature
-  to run any additional `jupyter labextension install` commands.
-  '
+  can be pip/conda installed and no longer require nodejs or rebuilding Jupyterlab.
+  If nodejs is required for an extension you which to install, install it via conda.
+  You can use the Docker Snippet feature to run any additional `jupyter labextension
+  install` commands. '
 revision: 12
 schema: 1
 tags:
