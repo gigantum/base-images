@@ -12,7 +12,7 @@ image:
 languages:
 - python3
 license: MIT
-name: (Legacy) Python3 Minimal w/ Jupyterlab 2
+name: (Legacy) Python 3.7 w/ Jupyterlab 2
 os_class: ubuntu
 os_release: '18.04'
 package_managers:
@@ -20,7 +20,7 @@ package_managers:
 - conda3: null
 - apt: null
 readme: 'NOTE: GIGANTUM HAS MOVED TO PRIMARY SUPPORT OF JUPYTERLAB 3. THIS BASE IS
-  MAINTAINED FOR USERS WHO CANNOT UPGRADE TO JUPYTERLAB 3 YET AND MAY BE REMOVED IN THE FUTURE.
+  MAINTAINED FOR USERS WHO CANNOT UPGRADE TO JUPYTERLAB 3 or Python 3.8 YET AND MAY BE REMOVED IN THE FUTURE.
 
   A minimal Base with Python 3.7 and JupyterLab 2
 
