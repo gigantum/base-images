@@ -12,13 +12,13 @@ LABEL maintainer="Gigantum <support@gigantum.com>"
 ENV RSTUDIO_SHA256=a46bbfbcb468e7af6aa12280adb830056f4a10e3457fd2f5969bb31d4d476939 \
     RSTUDIO_VER=1.4.1106
 
-RUN curl --silent --show-error --location --output rstudio-server-${RSTUDIO_VER}-amd64.deb \
+RUN cd /tmp && \
+    curl --silent --show-error --location --output rstudio-server-${RSTUDIO_VER}-amd64.deb \
          https://download2.rstudio.org/server/bionic/amd64/rstudio-server-${RSTUDIO_VER}-amd64.deb && \
     echo $RSTUDIO_SHA256 rstudio-server-${RSTUDIO_VER}-amd64.deb | sha256sum -c && \
     apt-get update && apt-get install -yq gdebi-core && \
-    gdebi ./rstudio-server-*-amd64.deb && \
-    apt-get remove -qq -y gdebi-core && \
-    apt-get clean && rm -rf /var/lib/apt/lists/* && \
+    gdebi -n ./rstudio-server-*-amd64.deb && \
+    apt-get clean && \
     rm ./rstudio-server-*-amd64.deb
 
 # Install system level dependencies
@@ -27,7 +27,7 @@ RUN apt-get update \
         # RStudio requirements for notebooks
         r-cran-catools \
         r-cran-bitops \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+    && apt-get clean
 
 # Expose port for RStudio
 EXPOSE 8787
