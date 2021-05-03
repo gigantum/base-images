@@ -9,8 +9,8 @@ LABEL maintainer="Gigantum <support@gigantum.com>"
 
 # Using variables mostly to make it obvious what needs to be updated in future
 # Check here for latest version: https://rstudio.com/products/rstudio/download/#download
-ENV RSTUDIO_SHA256=a46bbfbcb468e7af6aa12280adb830056f4a10e3457fd2f5969bb31d4d476939 \
-    RSTUDIO_VER=1.4.1106
+ENV RSTUDIO_SHA256=47022541152d0b586c810ab23c36ee2fc0d7e0d1b69c554dfcd7fe00d0fb571b \
+    RSTUDIO_VER=1.3.1093
 
 RUN cd /tmp && \
     curl --silent --show-error --location --output rstudio-server-${RSTUDIO_VER}-amd64.deb \
