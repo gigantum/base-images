@@ -1,4 +1,4 @@
-description: "RStudio\xAE Server with CRAN PPA R 4.0 + tidyverse packages (+ Python3.8\
+description: "RStudio\xAE Server with R 4.0, CRAN PPA w/ tidyverse packages (+ Python3.8\
   \ and JupyterLab3)"
 development_tools:
 - rstudio
@@ -15,7 +15,7 @@ languages:
 - R
 - python3
 license: MIT
-name: "R 4.0 in RStudio\xAE Server w/ Tidyverse pre-installed"
+name: "R 4.0 in RStudio\xAE Server w/ Tidyverse installed"
 os_class: ubuntu
 os_release: '20.04'
 package_managers:
