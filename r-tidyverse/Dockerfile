@@ -3,52 +3,45 @@
 # The below is a relatively straightforward adaptation of directions at
 # https://cran.r-project.org/bin/linux/ubuntu/README.html
 
-FROM gigantum/python3-minimal:d11cc37736-2020-06-25
+FROM gigantum/python3-minimal:f415d5dff3-2021-04-29
 LABEL maintainer="Gigantum <support@gigantum.com>"
 
-# I downloaded this key using
-# gpg --keyserver keyserver.ubuntu.com --recv-key 0x51716619e084dab9
-# gpg -a --export 0x51716619e084dab9 > rutter-cran-key.txt
-# Could also directly do: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 0x51716619e084dab9
-# gpg and gpg-agent are required in any case
-COPY rutter-cran-key.txt /tmp/
-
 # Install system level dependencies
-RUN apt-get update \
-    && apt-get install -yq --no-install-recommends \
-        # Enables add-apt-repository
-        software-properties-common \
-        # These two packages required to import keys into apt
-        gpg \
-        gpg-agent \
-    && apt-key add /tmp/rutter-cran-key.txt \
-    && echo "deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/" > /etc/apt/sources.list.d/cran.list \
+RUN apt-get update && \
+    # Enables add-apt-repository
+    apt-get install -yq --no-install-recommends software-properties-common dirmngr \
+            # These two packages required to import keys into apt
+            gpg gpg-agent && \
+    # import the signing key (by Michael Rutter) for these repo
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9 && \
+    add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/" && \
     # This also triggers an update as of 18.04/bionic
-    && add-apt-repository ppa:marutter/c2d4u3.5 \
-    && apt-get install -yq --no-install-recommends \
-        r-base \
-        # We get any remaining needed compilers here
-        r-base-dev \
-        r-recommended \
-        r-cran-tidyverse \
-        r-cran-data.table \
-        r-cran-devtools \
-        # Needed by IRkernel
-        r-cran-repr \
-        r-cran-pbdzmq \
-        r-cran-uuid \
-        # OpenBLAS makes R much faster - it will be default upon install
-        libopenblas-base \
-        libopenblas-dev \
-    && apt-get clean
+    add-apt-repository ppa:c2d4u.team/c2d4u4.0+ && \
+    apt-get update && \
+    apt-get install -yq --no-install-recommends \
+            r-base \
+            # We get any remaining needed compilers here
+            r-base-dev \
+            r-recommended \
+            r-cran-tidyverse \
+            r-cran-data.table \
+            r-cran-devtools \
+            # Needed by IRkernel
+            r-cran-repr \
+            r-cran-pbdzmq \
+            r-cran-uuid \
+            # OpenBLAS makes R much faster - it will be default upon install
+            libopenblas-base \
+            libopenblas-dev && \
+    apt-get clean
 
 # TODO DC Maybe we should use MRAN? It would certainly make subsequent projects
 # more reproducible, but is not in line with how we're using pip, conda,
 # etc. e.g.:
 # options(repos=c(CRAN="https://cran.microsoft.com/snapshot/2018-07-23/"))
-RUN echo 'options(repos = c(CRAN = "https://cloud.r-project.org/"))\n' >> /etc/R/Rprofile.site \
+RUN echo 'options(repos = c(CRAN = "https://cloud.r-project.org/"))\n' >> /etc/R/Rprofile.site && \
     # Also Install IRkernal and set up the installed R interpreter in Jupyter
-    && R -e "install.packages('IRkernel', upgrade_dependencies=FALSE); IRkernel::installspec(user=FALSE)"
+    R -e "install.packages('IRkernel', upgrade_dependencies=FALSE); IRkernel::installspec(user=FALSE)"
     # The above will error out by attempting to use the IRkernel package.
     # An alternative is to ensure packages are installed as follows:
     # The below did not succeed even when biocLite() was run above

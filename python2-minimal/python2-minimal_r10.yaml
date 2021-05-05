@@ -1,4 +1,4 @@
-description: A minimal Base containing Python 2.7 and JupyterLab
+description: (Legacy) A minimal Base containing Python 2.7 and JupyterLab
 development_tools:
 - jupyterlab
 - notebook
@@ -20,7 +20,7 @@ package_managers:
 - conda2: null
 - apt: null
 readme: |
-  A minimal Base containing Python 2.7 and the latest supported JupyterLab (0.33). Python3 is recommended if possible!
+  A minimal Base containing Python 2.7 (deprecated) and the latest supported JupyterLab (0.33). It is strongly recommended that you upgrade to Python3 when possible!
 schema: 1
 tags:
 - ubuntu
