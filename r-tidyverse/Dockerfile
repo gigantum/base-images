@@ -33,7 +33,7 @@ RUN apt-get update && \
             # OpenBLAS makes R much faster - it will be default upon install
             libopenblas-base \
             libopenblas-dev && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+    apt-get clean
 
 # TODO DC Maybe we should use MRAN? It would certainly make subsequent projects
 # more reproducible, but is not in line with how we're using pip, conda,

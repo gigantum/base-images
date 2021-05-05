@@ -8,7 +8,7 @@ image:
   namespace: gigantum
   repository: r-tidyverse
   server: hub.docker.com
-  tag: b51bd7ffc5-2021-04-29
+  tag: 07619444b6-2021-05-05
 languages:
 - R
 - python3
@@ -28,11 +28,10 @@ readme: 'A Base containing JupyterLab 3 install with R 4.0 and tidyverse package
   from the official CRAN PPA. OpenBLAS is configured.
 
 
-  You should generally use apt with `r-cran-<package name>` to quickly install
-  "package name" from CRAN. You can also use Docker snippets for approaches
-  like `install.packages` or `devtools::install_github`. Don''''t hesitate to use
-  the "discuss" link (in the lower-right "?" bubble in the app) if you''''d like
-  some guidance!
+  You should generally use apt with `r-cran-<package name>` to quickly install "package
+  name" from CRAN. You can also use Docker snippets for approaches like `install.packages`
+  or `devtools::install_github`. Don''''t hesitate to use the "discuss" link (in the
+  lower-right "?" bubble in the app) if you''''d like some guidance!
 
   '
 revision: 10
